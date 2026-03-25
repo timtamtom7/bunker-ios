@@ -19,6 +19,7 @@ final class DecisionDetailViewModel {
 
     private let service = DecisionService.shared
     private let aiService = AIAnalysisService.shared
+    private let decisionAdviceService = AIDecisionService.shared
 
     init(decision: Decision) {
         self.decision = decision
@@ -28,6 +29,7 @@ final class DecisionDetailViewModel {
     func save() async {
         await service.saveDecision(decision)
         aiInsight = aiService.generateInsight(for: decision)
+        decisionAdviceService.scheduleReminder(for: decision)
     }
 
     func addCriteria() async {
@@ -69,6 +71,11 @@ final class DecisionDetailViewModel {
 
     func refreshInsight() {
         aiInsight = aiService.generateInsight(for: decision)
+    }
+    
+    func generateAIAdvice() async {
+        decision.aiAdvice = await decisionAdviceService.generateAdvice(for: decision)
+        await save()
     }
 
     func refresh() async {

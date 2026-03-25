@@ -8,7 +8,16 @@ struct Decision: Identifiable, Codable, Equatable {
     var options: [String]
     var createdAt: Date
     var updatedAt: Date
-
+    var deadlineDate: Date?
+    var reminderDate: Date?
+    var resolvedAt: Date?
+    var isGoodOutcome: Bool?
+    var stake: StakeLevel
+    var reversibility: Reversibility
+    var timeHorizon: TimeHorizon
+    var aiAdvice: String?
+    var decisionHistory: [DecisionHistoryEntry]
+    
     init(
         id: UUID = UUID(),
         title: String,
@@ -16,7 +25,16 @@ struct Decision: Identifiable, Codable, Equatable {
         criteria: [Criteria] = [],
         options: [String] = [],
         createdAt: Date = Date(),
-        updatedAt: Date = Date()
+        updatedAt: Date = Date(),
+        deadlineDate: Date? = nil,
+        reminderDate: Date? = nil,
+        resolvedAt: Date? = nil,
+        isGoodOutcome: Bool? = nil,
+        stake: StakeLevel = .medium,
+        reversibility: Reversibility = .moderate,
+        timeHorizon: TimeHorizon = .mediumTerm,
+        aiAdvice: String? = nil,
+        decisionHistory: [DecisionHistoryEntry] = []
     ) {
         self.id = id
         self.title = title
@@ -25,14 +43,106 @@ struct Decision: Identifiable, Codable, Equatable {
         self.options = options
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+        self.deadlineDate = deadlineDate
+        self.reminderDate = reminderDate
+        self.resolvedAt = resolvedAt
+        self.isGoodOutcome = isGoodOutcome
+        self.stake = stake
+        self.reversibility = reversibility
+        self.timeHorizon = timeHorizon
+        self.aiAdvice = aiAdvice
+        self.decisionHistory = decisionHistory
     }
-
+    
     var isComplete: Bool {
         !criteria.isEmpty && !options.isEmpty
     }
-
+    
     var allCriteriaScored: Bool {
         criteria.allSatisfy { $0.isScored }
+    }
+    
+    var daysSinceCreation: Int {
+        Calendar.current.dateComponents([.day], from: createdAt, to: Date()).day ?? 0
+    }
+    
+    var isOverdue: Bool {
+        guard let deadline = deadlineDate else { return false }
+        return Date() > deadline && resolvedAt == nil
+    }
+    
+    var daysUntilDeadline: Int? {
+        guard let deadline = deadlineDate else { return nil }
+        return Calendar.current.dateComponents([.day], from: Date(), to: deadline).day
+    }
+}
+
+struct DecisionHistoryEntry: Identifiable, Codable, Equatable {
+    let id: UUID
+    var note: String
+    var createdAt: Date
+    
+    init(id: UUID = UUID(), note: String, createdAt: Date = Date()) {
+        self.id = id
+        self.note = note
+        self.createdAt = createdAt
+    }
+}
+
+enum StakeLevel: String, Codable, CaseIterable, Equatable {
+    case low = "Low"
+    case medium = "Medium"
+    case high = "High"
+    case critical = "Critical"
+    
+    var color: String {
+        switch self {
+        case .low: return "34C759"
+        case .medium: return "F5A623"
+        case .high: return "FF9500"
+        case .critical: return "FF453A"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .low: return "Minor impact — easy to change"
+        case .medium: return "Moderate impact on your life/work"
+        case .high: return "Major life/work impact"
+        case .critical: return "Potentially irreversible, major consequences"
+        }
+    }
+}
+
+enum Reversibility: String, Codable, CaseIterable, Equatable {
+    case easy = "Easy"
+    case moderate = "Moderate"
+    case difficult = "Difficult"
+    case impossible = "Impossible"
+    
+    var description: String {
+        switch self {
+        case .easy: return "Can be undone easily"
+        case .moderate: return "Takes some effort to reverse"
+        case .difficult: return "Hard to reverse once made"
+        case .impossible: return "Cannot be undone"
+        }
+    }
+}
+
+enum TimeHorizon: String, Codable, CaseIterable, Equatable {
+    case shortTerm = "Short-term"
+    case mediumTerm = "Medium-term"
+    case longTerm = "Long-term"
+    case permanent = "Permanent"
+    
+    var description: String {
+        switch self {
+        case .shortTerm: return "Days to weeks"
+        case .mediumTerm: return "Months to a year"
+        case .longTerm: return "Several years"
+        case .permanent: return "Forever"
+        }
     }
 }
 
@@ -46,9 +156,12 @@ extension Decision {
             Criteria(name: "Scalability", importance: 9),
             Criteria(name: "Cost", importance: 6)
         ],
-        options: ["Node.js", "Go", "Rust"]
+        options: ["Node.js", "Go", "Rust"],
+        stake: .high,
+        reversibility: .difficult,
+        timeHorizon: .longTerm
     )
-
+    
     static let empty = Decision(
         title: "",
         description: "",
