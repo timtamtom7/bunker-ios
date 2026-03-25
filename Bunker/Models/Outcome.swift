@@ -1,6 +1,6 @@
 import Foundation
 
-struct Outcome: Identifiable, Codable {
+struct Outcome: Identifiable, Codable, Equatable {
     let id: UUID
     let decisionId: UUID
     let option: String
@@ -9,7 +9,7 @@ struct Outcome: Identifiable, Codable {
     let scoreBreakdown: [ScoreBreakdown]
     let generatedAt: Date
 
-    struct ScoreBreakdown: Identifiable, Codable {
+    struct ScoreBreakdown: Identifiable, Codable, Equatable {
         let id: UUID
         let criteriaName: String
         let criteriaWeight: Int

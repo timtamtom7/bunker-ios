@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OutcomeView: View {
+@MainActor struct OutcomeView: View {
     let outcome: Outcome
     let decision: Decision
     @State private var isExpanded = false

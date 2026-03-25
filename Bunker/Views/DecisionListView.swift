@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DecisionListView: View {
+@MainActor struct DecisionListView: View {
     @State private var viewModel = DecisionListViewModel()
     @State private var searchText = ""
 

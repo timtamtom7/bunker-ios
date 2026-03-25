@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct NewDecisionView: View {
+@MainActor struct NewDecisionView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var title = ""
     @State private var description = ""

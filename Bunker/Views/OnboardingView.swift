@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OnboardingView: View {
+@MainActor struct OnboardingView: View {
     @State private var currentStep = 0
     @State private var isComplete = false
     private let steps = OnboardingService.steps

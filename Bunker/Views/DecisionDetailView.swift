@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct DecisionDetailView: View {
+@MainActor struct DecisionDetailView: View {
     @State private var viewModel: DecisionDetailViewModel
     @Environment(\.dismiss) private var dismiss
 
