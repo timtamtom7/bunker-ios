@@ -19,6 +19,7 @@ settings:
     INFOPLIST_KEY_UILaunchScreen_Generation: YES
     INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
     INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+    INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription: "Bunker uses your calendar to add decision deadlines as events."
 
 packages:
   SQLite:
@@ -43,3 +44,5 @@ targets:
     dependencies:
       - package: SQLite
         product: SQLite
+      - framework: EventKit.framework
+        embed: false

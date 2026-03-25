@@ -16,7 +16,7 @@ struct TemplatePickerView: View {
                         .padding(.top, Spacing.sm)
 
                     ForEach(DecisionTemplate.templates) { template in
-                        TemplateCard(template: template) {
+                        TemplatePickerCard(template: template) {
                             onSelect(template)
                             dismiss()
                         }
@@ -37,7 +37,7 @@ struct TemplatePickerView: View {
     }
 }
 
-struct TemplateCard: View {
+struct TemplatePickerCard: View {
     let template: DecisionTemplate
     let onSelect: () -> Void
 
@@ -63,7 +63,7 @@ struct TemplateCard: View {
                             .font(.bunkerHeading3)
                             .foregroundStyle(Color.bunkerTextPrimary)
 
-                        Text(template.description)
+                        Text(template.description ?? "")
                             .font(.bunkerCaption)
                             .foregroundStyle(Color.bunkerTextSecondary)
                             .lineLimit(1)

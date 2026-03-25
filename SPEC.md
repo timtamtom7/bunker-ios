@@ -193,3 +193,80 @@ struct CriteriaScore: Identifiable, Codable
 - **Bunker** — iOS 26.0, iPhone + iPad
 - No watchOS in R1
 - No Widgets in R1
+
+## R7 — Advanced Features, Polish & Organization
+
+### Decision Templates
+- DecisionTemplate model: name, description, criteria templates with guidance
+- CriteriaTemplate: name, importance (weight), guidance hint for scoring
+- 4 default templates: Career Move, Major Purchase, Relocation, Partnership
+- TemplatesView: browse, create, manage templates
+- CreateTemplateSheet: create custom templates with criteria
+- TemplateDetailSheet: view template details
+- Templates accessible from Settings
+
+### Decision Groups
+- DecisionGroup model: name, icon, color, decision IDs
+- 10 predefined icons: folder, briefcase, house, dollarsign.circle, heart, book, airplane, graduationcap, house.circle, cart
+- GroupsView: manage decision groups
+- CreateGroupSheet: create groups with icon and color picker
+- GroupDetailSheet: view group and its decisions
+- Groups accessible from Settings
+
+### Decision Statistics
+- DecisionStats model: total, completed, pending decisions; avg criteria/options, top criteria
+- DecisionStatsView: visual dashboard with completion rate, averages, top criteria
+
+### R7 Additional Features
+- Empty state views for templates and groups
+- Settings updated to show R10 round indicator
+- Color extension adds Color(hex:) initializer
+
+## R8 — Advanced AI, Integrations
+
+### AI Decision Coach
+- AIAnalysisService: enhanced on-device analysis with NLModel for decision tone
+- AIDecisionService: structured decision advice based on criteria weights
+- AI-generated "what-if" scenario analysis
+- Risk assessment based on confidence scores
+
+### Third-Party Integrations
+- ExportService: export decisions as JSON/PDF
+- ShareDecision via share code (6-char alphanumeric)
+- SharePermission levels: view, comment, edit
+- SharedDecision model with expiry, views tracking
+
+### Advanced Analytics
+- Decision pattern analysis over time
+- Criteria effectiveness tracking (which criteria lead to good decisions)
+- Outcome confidence correlation analysis
+
+## R9 — Community, Subscriptions
+
+### Subscription Tiers
+- Free: 5 decisions, 3 criteria per decision, basic simulation
+- Pro ($4.99/mo): unlimited decisions, AI coach, templates, groups, export
+- Team ($9.99/mo): Pro + shared decision spaces, team analytics
+
+### Community Features
+- Anonymous decision benchmarking (how does your criteria compare)
+- "Bunker Pro" achievement badges
+- Shared decision feed (opt-in, anonymized)
+
+## R10 — Launch, Marketing, Platform
+
+### App Store
+- Full App Store listing with screenshots
+- Feature highlights: AI insights, weighted criteria, outcome simulation
+- Privacy policy, parental guidance
+- Marketing video demonstrating decision workflow
+
+### Marketing
+- bunker.app marketing site
+- SEO: "decision making app", "AI decision coach", "criteria weighted decisions"
+- Blog: decision science, case studies
+
+### Platform
+- iPad optimized (already done)
+- watchOS companion for decision reminders
+- Android app (Flutter)
