@@ -27,28 +27,51 @@ final class AIDecisionService: @unchecked Sendable {
             advice.append("\(decision.criteria.count - scoredCount) criteria still need scoring.")
         }
         
-        // Stake-based advice
+        // Stake-based deep advice
         switch decision.stake {
-        case .critical, .high:
-            advice.append("This is a high-stakes decision. Consider sleeping on it before committing.")
-            if decision.reversibility == .impossible {
-                advice.append("This decision is irreversible. Make sure you've explored all angles.")
-            }
-        case .low, .medium:
-            if decision.options.count > 3 {
-                advice.append("With multiple options, try narrowing to your top 2-3 before deep analysis.")
-            }
+        case .critical:
+            advice.append("⚠️ Critical stakes — this could fundamentally change your life trajectory.")
+            advice.append(stakeCriticalAdvice(for: decision))
+        case .high:
+            advice.append("🔥 High-stakes decision — take this seriously and consider external input.")
+            advice.append(stakeHighAdvice(for: decision))
+        case .medium:
+            advice.append("📊 Moderate stakes — a balanced approach is appropriate here.")
+        case .low:
+            advice.append("💡 Lower stakes — don't overthink this. Make a call and move on.")
         }
         
-        // Time horizon advice
-        if decision.timeHorizon == .permanent {
-            advice.append("A permanent decision deserves extra scrutiny. What would you tell someone else in your situation?")
+        // Reversibility framing
+        switch decision.reversibility {
+        case .impossible:
+            advice.append("🚫 This is irreversible. Double-check your reasoning and consider seeking counsel.")
+        case .difficult:
+            advice.append("🔄 Reversing this will be hard. Make sure you're confident before committing.")
+        case .moderate:
+            advice.append("↔️ Some flexibility exists — you can course-correct if needed.")
+        case .easy:
+            advice.append("✅ Easy to reverse — don't fear making a wrong call here.")
+        }
+        
+        // Time horizon framing
+        switch decision.timeHorizon {
+        case .permanent:
+            advice.append("⏳ This is permanent. Ask yourself: will I regret not choosing this in 10 years?")
+        case .longTerm:
+            advice.append("📅 Long-term impact. Think about how this aligns with where you want to be.")
+        case .mediumTerm:
+            advice.append("🗓️ Medium-term decision. Consider both immediate and downstream effects.")
+        case .shortTerm:
+            advice.append("⚡ Short-term choice. Quick iteration is fine here.")
         }
         
         // Pattern analysis from criteria names
         let criteriaText = decision.criteria.map { $0.name.lowercased() }.joined(separator: " ")
         if criteriaText.contains("cost") && !criteriaText.contains("value") && !criteriaText.contains("benefit") {
             advice.append("You mention costs but not benefits. Consider adding a 'value' or 'benefit' criterion.")
+        }
+        if !criteriaText.contains("risk") && !criteriaText.contains("downside") {
+            advice.append("No risk criteria detected. What could go wrong with each option?")
         }
         
         // Find the leading option
@@ -61,6 +84,26 @@ final class AIDecisionService: @unchecked Sendable {
         advice.append(challenge)
         
         return advice.joined(separator: "\n\n")
+    }
+    
+    private func stakeCriticalAdvice(for decision: Decision) -> String {
+        var tips = [
+            "Sleep on it before deciding.",
+            "Get a second opinion from someone you trust.",
+            "Document your reasoning so you can review it later.",
+            "Ask: would I make this same decision if I knew more?"
+        ]
+        return tips.randomElement() ?? tips[0]
+    }
+    
+    private func stakeHighAdvice(for decision: Decision) -> String {
+        var tips = [
+            "Consider the worst-case scenario for each option.",
+            "Talk it through with someone who has been in a similar situation.",
+            "Visualize yourself in 1 year — will you regret this?",
+            "Prioritize criteria that align with your core values."
+        ]
+        return tips.randomElement() ?? tips[0]
     }
     
     private func leadingOption(for decision: Decision) -> String? {
@@ -105,23 +148,66 @@ final class AIDecisionService: @unchecked Sendable {
     func scheduleReminder(for decision: Decision) {
         let center = UNUserNotificationCenter.current()
         
+        // 2 days before deadline
         if let deadline = decision.deadlineDate {
-            center.removePendingNotificationRequests(withIdentifiers: ["deadline_\(decision.id.uuidString)"])
+            center.removePendingNotificationRequests(withIdentifiers: [
+                "deadline_2day_\(decision.id.uuidString)",
+                "deadline_today_\(decision.id.uuidString)",
+                "deadline_followup_\(decision.id.uuidString)"
+            ])
             
-            let content = UNMutableNotificationContent()
-            content.title = "Decision deadline approaching"
-            content.body = "\"\(decision.title)\" is due soon. Have you made your decision?"
-            content.sound = .default
-            content.categoryIdentifier = "DECISION_REMINDER"
+            // 2 days before
+            let twoDayContent = UNMutableNotificationContent()
+            twoDayContent.title = "⏰ Decision deadline approaching"
+            twoDayContent.body = "\"\(decision.title)\" is due in 2 days. Have you made your decision?"
+            twoDayContent.sound = .default
+            twoDayContent.categoryIdentifier = "DECISION_REMINDER"
             
-            let reminderDate = Calendar.current.date(byAdding: .day, value: -2, to: deadline) ?? deadline
-            let components = Calendar.current.dateComponents([.year, .month, .day, .hour], from: reminderDate)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-            let request = UNNotificationRequest(identifier: "deadline_\(decision.id.uuidString)", content: content, trigger: trigger)
+            let twoDayDate = Calendar.current.date(byAdding: .day, value: -2, to: deadline) ?? deadline
+            let twoDayComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: twoDayDate)
+            let twoDayTrigger = UNCalendarNotificationTrigger(dateMatching: twoDayComponents, repeats: false)
+            let twoDayRequest = UNNotificationRequest(
+                identifier: "deadline_2day_\(decision.id.uuidString)",
+                content: twoDayContent,
+                trigger: twoDayTrigger
+            )
+            center.add(twoDayRequest)
             
-            center.add(request)
+            // On deadline day
+            let todayContent = UNMutableNotificationContent()
+            todayContent.title = "📋 Decision day"
+            todayContent.body = "\"\(decision.title)\" is due today. Have you decided yet?"
+            todayContent.sound = .default
+            todayContent.categoryIdentifier = "DECISION_REMINDER"
+            
+            let deadlineComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: deadline)
+            let deadlineTrigger = UNCalendarNotificationTrigger(dateMatching: deadlineComponents, repeats: false)
+            let deadlineRequest = UNNotificationRequest(
+                identifier: "deadline_today_\(decision.id.uuidString)",
+                content: todayContent,
+                trigger: deadlineTrigger
+            )
+            center.add(deadlineRequest)
+            
+            // 1 week after deadline (follow-up)
+            let followUpDate = Calendar.current.date(byAdding: .day, value: 7, to: deadline) ?? deadline
+            let followUpContent = UNMutableNotificationContent()
+            followUpContent.title = "🤔 How did it go?"
+            followUpContent.body = "\"\(decision.title)\" — what did you decide? Mark the outcome to track your decision quality."
+            followUpContent.sound = .default
+            followUpContent.categoryIdentifier = "DECISION_FOLLOWUP"
+            
+            let followUpComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: followUpDate)
+            let followUpTrigger = UNCalendarNotificationTrigger(dateMatching: followUpComponents, repeats: false)
+            let followUpRequest = UNNotificationRequest(
+                identifier: "deadline_followup_\(decision.id.uuidString)",
+                content: followUpContent,
+                trigger: followUpTrigger
+            )
+            center.add(followUpRequest)
         }
         
+        // Custom reminder
         if let reminder = decision.reminderDate {
             center.removePendingNotificationRequests(withIdentifiers: ["reminder_\(decision.id.uuidString)"])
             
@@ -142,7 +228,9 @@ final class AIDecisionService: @unchecked Sendable {
     func cancelReminder(for decision: Decision) {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [
-            "deadline_\(decision.id.uuidString)",
+            "deadline_2day_\(decision.id.uuidString)",
+            "deadline_today_\(decision.id.uuidString)",
+            "deadline_followup_\(decision.id.uuidString)",
             "reminder_\(decision.id.uuidString)"
         ])
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		107AE1A06A4659ABD2619847 /* DecisionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750DFBC8464AD204199139A2 /* DecisionTemplate.swift */; };
 		1E520D2602DB65D7C3BE0FCC /* Decision.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B24968BEA6FE817A09982 /* Decision.swift */; };
 		23667C2A6BD4AA49A2D6357A /* OutcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E61C08F6A48845EB1851E /* OutcomeView.swift */; };
 		2B4A0A47CBA2029CFCE15188 /* DecisionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167028B2FC574A2D52810D9D /* DecisionDetailView.swift */; };
@@ -23,6 +24,8 @@
 		B9C51CD29AFB7300317FC086 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 6B0288ECAF3B221D07B5AFC2 /* SQLite */; };
 		BB7C17917391584715A61653 /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407DDBE4F60F70E07EE7458D /* Outcome.swift */; };
 		C21A5E4730912E8A49AC63D6 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB176A2D16B31E71F08B72E /* DatabaseService.swift */; };
+		C5338EBDE26D7593790C6DA9 /* TemplatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C071C7D7E564055A9658E5 /* TemplatePickerView.swift */; };
+		C91884C36CA6309BD761B056 /* DecisionDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8B246D74C4B5C57BB1D015 /* DecisionDashboardView.swift */; };
 		CA6C07A852BC2972D0B3ADB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68BC6CCE86233B77AFBDC29 /* ContentView.swift */; };
 		D67C2207A9CB723E43D879AF /* DecisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575618A52B0822B6F79D9EE1 /* DecisionService.swift */; };
 		F54845489E5470409D72614D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5CE6A4BA7BE8E294260C059E /* PrivacyInfo.xcprivacy */; };
@@ -32,15 +35,18 @@
 		167028B2FC574A2D52810D9D /* DecisionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionDetailView.swift; sourceTree = "<group>"; };
 		18EBA0DB376C4B51A1ED21D3 /* Criteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Criteria.swift; sourceTree = "<group>"; };
 		1912EAAE2987E0C8158E49E8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1A8B246D74C4B5C57BB1D015 /* DecisionDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionDashboardView.swift; sourceTree = "<group>"; };
 		3A4E61C08F6A48845EB1851E /* OutcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeView.swift; sourceTree = "<group>"; };
 		3C1848294F2E104D73D8D22C /* AIDecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDecisionService.swift; sourceTree = "<group>"; };
 		407DDBE4F60F70E07EE7458D /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		575618A52B0822B6F79D9EE1 /* DecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionService.swift; sourceTree = "<group>"; };
 		5CE6A4BA7BE8E294260C059E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		750DFBC8464AD204199139A2 /* DecisionTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionTemplate.swift; sourceTree = "<group>"; };
 		81E6FC0A5AF2E75F78A7462C /* AIAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAnalysisService.swift; sourceTree = "<group>"; };
 		8CB176A2D16B31E71F08B72E /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
 		8EE386331DA98483F11BEC57 /* NewDecisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDecisionView.swift; sourceTree = "<group>"; };
 		98021A0FE2008175F374B9D5 /* DecisionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionDetailViewModel.swift; sourceTree = "<group>"; };
+		99C071C7D7E564055A9658E5 /* TemplatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePickerView.swift; sourceTree = "<group>"; };
 		A8E2E4EF7D0E9D5905AFAB9B /* DecisionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionListViewModel.swift; sourceTree = "<group>"; };
 		B1E47C95491D1C31B0F5E69F /* BunkerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerApp.swift; sourceTree = "<group>"; };
 		D12B24968BEA6FE817A09982 /* Decision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decision.swift; sourceTree = "<group>"; };
@@ -98,6 +104,8 @@
 		8B0A34370160CD14C7B5050A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				1A8B246D74C4B5C57BB1D015 /* DecisionDashboardView.swift */,
+				99C071C7D7E564055A9658E5 /* TemplatePickerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -135,6 +143,7 @@
 			children = (
 				18EBA0DB376C4B51A1ED21D3 /* Criteria.swift */,
 				D12B24968BEA6FE817A09982 /* Decision.swift */,
+				750DFBC8464AD204199139A2 /* DecisionTemplate.swift */,
 				407DDBE4F60F70E07EE7458D /* Outcome.swift */,
 			);
 			path = Models;
@@ -233,15 +242,18 @@
 				B492795DA17145F7527886A6 /* Criteria.swift in Sources */,
 				C21A5E4730912E8A49AC63D6 /* DatabaseService.swift in Sources */,
 				1E520D2602DB65D7C3BE0FCC /* Decision.swift in Sources */,
+				C91884C36CA6309BD761B056 /* DecisionDashboardView.swift in Sources */,
 				2B4A0A47CBA2029CFCE15188 /* DecisionDetailView.swift in Sources */,
 				3AE29434DEA8B4DF8BD42101 /* DecisionDetailViewModel.swift in Sources */,
 				8289C725BABD4FBEC189E6A9 /* DecisionListView.swift in Sources */,
 				A306C07EDA39F0DB967C90FD /* DecisionListViewModel.swift in Sources */,
 				D67C2207A9CB723E43D879AF /* DecisionService.swift in Sources */,
+				107AE1A06A4659ABD2619847 /* DecisionTemplate.swift in Sources */,
 				5F3FC732C67F5D4D6249F6F9 /* NewDecisionView.swift in Sources */,
 				BB7C17917391584715A61653 /* Outcome.swift in Sources */,
 				23667C2A6BD4AA49A2D6357A /* OutcomeView.swift in Sources */,
 				694474856777321A99150E8A /* SettingsView.swift in Sources */,
+				C5338EBDE26D7593790C6DA9 /* TemplatePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

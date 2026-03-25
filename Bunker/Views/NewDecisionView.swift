@@ -6,6 +6,10 @@ struct NewDecisionView: View {
     @State private var description = ""
     @State private var options: [String] = []
     @State private var newOption = ""
+    @State private var stake: StakeLevel = .medium
+    @State private var reversibility: Reversibility = .moderate
+    @State private var timeHorizon: TimeHorizon = .mediumTerm
+    @State private var showTemplatePicker = false
 
     let onSave: (Decision) -> Void
 
@@ -13,6 +17,30 @@ struct NewDecisionView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
+                    // Template picker
+                    Button {
+                        showTemplatePicker = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "doc.on.doc.fill")
+                                .foregroundStyle(Color.bunkerAccent)
+                            Text("Use a Template")
+                                .font(.bunkerBodySmall)
+                                .foregroundStyle(Color.bunkerAccent)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.bunkerCaption)
+                                .foregroundStyle(Color.bunkerTextTertiary)
+                        }
+                        .padding(Spacing.sm)
+                        .background(Color.bunkerAccent.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.bunkerAccent.opacity(0.3), lineWidth: 1)
+                        )
+                    }
+
                     // Title
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("What decision are you facing?")
@@ -40,6 +68,83 @@ struct NewDecisionView: View {
                             .padding(Spacing.sm)
                             .background(Color.bunkerSurface)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+
+                    // Stake Framework
+                    VStack(alignment: .leading, spacing: Spacing.sm) {
+                        Text("Decision Context")
+                            .font(.bunkerHeading3)
+                            .foregroundStyle(Color.bunkerTextPrimary)
+
+                        Text("Help AI give better advice by setting the stakes")
+                            .font(.bunkerCaption)
+                            .foregroundStyle(Color.bunkerTextTertiary)
+
+                        // Stake Level
+                        VStack(alignment: .leading, spacing: Spacing.xxs) {
+                            HStack {
+                                Text("Stake Level")
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color.bunkerTextSecondary)
+                                Spacer()
+                                Text(stake.rawValue)
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color(hex: stake.color))
+                            }
+                            Picker("Stake", selection: $stake) {
+                                ForEach(StakeLevel.allCases, id: \.self) { level in
+                                    Text(level.rawValue).tag(level)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                        .padding(Spacing.sm)
+                        .background(Color.bunkerSurface)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                        // Reversibility
+                        VStack(alignment: .leading, spacing: Spacing.xxs) {
+                            HStack {
+                                Text("Reversibility")
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color.bunkerTextSecondary)
+                                Spacer()
+                                Text(reversibility.rawValue)
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color.bunkerTextSecondary)
+                            }
+                            Picker("Reversibility", selection: $reversibility) {
+                                ForEach(Reversibility.allCases, id: \.self) { level in
+                                    Text(level.rawValue).tag(level)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                        .padding(Spacing.sm)
+                        .background(Color.bunkerSurface)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                        // Time Horizon
+                        VStack(alignment: .leading, spacing: Spacing.xxs) {
+                            HStack {
+                                Text("Time Horizon")
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color.bunkerTextSecondary)
+                                Spacer()
+                                Text(timeHorizon.rawValue)
+                                    .font(.bunkerLabel)
+                                    .foregroundStyle(Color.bunkerTextSecondary)
+                            }
+                            Picker("TimeHorizon", selection: $timeHorizon) {
+                                ForEach(TimeHorizon.allCases, id: \.self) { level in
+                                    Text(level.rawValue).tag(level)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                        }
+                        .padding(Spacing.sm)
+                        .background(Color.bunkerSurface)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
 
                     // Options
@@ -115,7 +220,10 @@ struct NewDecisionView: View {
                         let decision = Decision(
                             title: title.trimmingCharacters(in: .whitespaces),
                             description: description.trimmingCharacters(in: .whitespaces),
-                            options: options
+                            options: options,
+                            stake: stake,
+                            reversibility: reversibility,
+                            timeHorizon: timeHorizon
                         )
                         onSave(decision)
                         dismiss()
@@ -123,7 +231,21 @@ struct NewDecisionView: View {
                     .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty || options.count < 2)
                 }
             }
+            .sheet(isPresented: $showTemplatePicker) {
+                TemplatePickerView { template in
+                    applyTemplate(template)
+                }
+            }
         }
+    }
+
+    private func applyTemplate(_ template: DecisionTemplate) {
+        title = ""
+        description = ""
+        options = template.options
+        stake = template.stake
+        reversibility = template.reversibility
+        timeHorizon = template.timeHorizon
     }
 }
 

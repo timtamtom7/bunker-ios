@@ -13,6 +13,9 @@ struct DecisionDetailView: View {
             VStack(alignment: .leading, spacing: Spacing.lg) {
                 headerSection
                 insightCard
+                if !viewModel.decision.options.isEmpty || !viewModel.decision.criteria.isEmpty {
+                    dashboardSection
+                }
                 criteriaSection
                 optionsSection
                 if !viewModel.decision.options.isEmpty && !viewModel.decision.criteria.isEmpty {
@@ -102,7 +105,154 @@ struct DecisionDetailView: View {
             .font(.bunkerBody)
             .foregroundStyle(Color.bunkerTextSecondary)
             .lineLimit(3...6)
+
+            // Deadline & Reminder row
+            HStack(spacing: Spacing.sm) {
+                deadlinePicker
+                reminderPicker
+            }
+
+            // Stake framework row
+            stakeFrameworkRow
         }
+    }
+
+    private var deadlinePicker: some View {
+        HStack(spacing: Spacing.xxs) {
+            Image(systemName: "calendar")
+                .font(.bunkerCaption)
+                .foregroundStyle(Color.bunkerAccent)
+
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { viewModel.decision.deadlineDate ?? Date() },
+                    set: { viewModel.decision.deadlineDate = $0 }
+                ),
+                displayedComponents: .date
+            )
+            .labelsHidden()
+            .font(.bunkerCaption)
+            .tint(Color.bunkerAccent)
+
+            if viewModel.decision.deadlineDate != nil {
+                Button {
+                    viewModel.decision.deadlineDate = nil
+                    Task { await viewModel.save() }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerTextTertiary)
+                }
+            }
+        }
+        .padding(Spacing.xs)
+        .background(Color.bunkerSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var reminderPicker: some View {
+        HStack(spacing: Spacing.xxs) {
+            Image(systemName: "bell")
+                .font(.bunkerCaption)
+                .foregroundStyle(Color.bunkerWarning)
+
+            DatePicker(
+                "",
+                selection: Binding(
+                    get: { viewModel.decision.reminderDate ?? Date() },
+                    set: { viewModel.decision.reminderDate = $0 }
+                ),
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .labelsHidden()
+            .font(.bunkerCaption)
+            .tint(Color.bunkerWarning)
+
+            if viewModel.decision.reminderDate != nil {
+                Button {
+                    viewModel.decision.reminderDate = nil
+                    Task { await viewModel.save() }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerTextTertiary)
+                }
+            }
+        }
+        .padding(Spacing.xs)
+        .background(Color.bunkerSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var stakeFrameworkRow: some View {
+        HStack(spacing: Spacing.xs) {
+            // Stake
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Stake")
+                    .font(.bunkerLabel)
+                    .foregroundStyle(Color.bunkerTextTertiary)
+                Picker("Stake", selection: Binding(
+                    get: { viewModel.decision.stake },
+                    set: { viewModel.decision.stake = $0; Task { await viewModel.save() } }
+                )) {
+                    ForEach(StakeLevel.allCases, id: \.self) { level in
+                        Text(level.rawValue).tag(level)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(Color(hex: viewModel.decision.stake.color))
+            }
+
+            Divider()
+                .frame(height: 30)
+                .background(Color.bunkerDivider)
+
+            // Reversibility
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Reversibility")
+                    .font(.bunkerLabel)
+                    .foregroundStyle(Color.bunkerTextTertiary)
+                Picker("Reversibility", selection: Binding(
+                    get: { viewModel.decision.reversibility },
+                    set: { viewModel.decision.reversibility = $0; Task { await viewModel.save() } }
+                )) {
+                    ForEach(Reversibility.allCases, id: \.self) { level in
+                        Text(level.rawValue).tag(level)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(Color.bunkerTextSecondary)
+            }
+
+            Divider()
+                .frame(height: 30)
+                .background(Color.bunkerDivider)
+
+            // Time Horizon
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Horizon")
+                    .font(.bunkerLabel)
+                    .foregroundStyle(Color.bunkerTextTertiary)
+                Picker("TimeHorizon", selection: Binding(
+                    get: { viewModel.decision.timeHorizon },
+                    set: { viewModel.decision.timeHorizon = $0; Task { await viewModel.save() } }
+                )) {
+                    ForEach(TimeHorizon.allCases, id: \.self) { level in
+                        Text(level.rawValue).tag(level)
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(Color.bunkerTextSecondary)
+            }
+        }
+        .padding(Spacing.sm)
+        .background(Color.bunkerSurface)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+
+    private var dashboardSection: some View {
+        DecisionDashboardView(decision: viewModel.decision, outcomes: viewModel.outcomes)
     }
 
     private var insightCard: some View {
