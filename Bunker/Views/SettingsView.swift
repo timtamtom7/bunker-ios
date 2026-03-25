@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct SettingsView: View {
     @AppStorage("colorScheme") private var colorScheme: String = "dark"
 
