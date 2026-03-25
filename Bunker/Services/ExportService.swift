@@ -3,7 +3,7 @@ import UIKit
 import PDFKit
 
 /// R5: Export service for JSON, PDF, and share formats
-final class ExportService: @unchecked Sendable {
+@MainActor final class ExportService: ObservableObject {
     static let shared = ExportService()
 
     private init() {}

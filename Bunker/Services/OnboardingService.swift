@@ -1,8 +1,8 @@
 import Foundation
 
 /// R5: Onboarding service for guided first decision
-final class OnboardingService {
-    static nonisolated(unsafe) let shared = OnboardingService()
+final class OnboardingService: @unchecked Sendable {
+    static let shared = OnboardingService()
 
     private let hasCompletedOnboardingKey = "bunker_has_completed_onboarding"
     private let onboardingStepKey = "bunker_onboarding_step"
