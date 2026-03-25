@@ -1,10 +1,10 @@
 import Foundation
 
 /// R5: Freemium subscription tier management
-@MainActor final class FreemiumService: ObservableObject {
-    static let shared = FreemiumService()
+final class FreemiumService: ObservableObject, @unchecked Sendable {
+    static nonisolated(unsafe) let shared = FreemiumService()
 
-    @Published private(set) var currentTier: SubscriptionTier = .free
+    @Published var currentTier: SubscriptionTier = .free
 
     private let tierKey = "bunker_subscription_tier"
     private let decisionCountKey = "bunker_decision_count_free"
