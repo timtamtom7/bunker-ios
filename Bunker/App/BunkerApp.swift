@@ -1,11 +1,24 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct BunkerApp: App {
+    init() {
+        requestNotificationPermission()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.dark)
+        }
+    }
+
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if let error = error {
+                print("Notification permission error: \(error)")
+            }
         }
     }
 }

@@ -71,9 +71,9 @@ struct DecisionListView: View {
 
     private var emptyState: some View {
         VStack(spacing: Spacing.md) {
-            Image(systemName: "rectangle.stack.badge.plus")
+            Image(systemName: "lightbulb.fill")
                 .font(.system(size: 56))
-                .foregroundStyle(Color.bunkerTextTertiary)
+                .foregroundStyle(Color.bunkerAccent)
 
             Text("No decisions yet")
                 .font(.bunkerHeading2)
@@ -83,6 +83,19 @@ struct DecisionListView: View {
                 .font(.bunkerBody)
                 .foregroundStyle(Color.bunkerTextSecondary)
                 .multilineTextAlignment(.center)
+
+            Button {
+                viewModel.showNewDecision = true
+            } label: {
+                Text("Create Your First Decision")
+                    .font(.bunkerBody)
+                    .foregroundStyle(Color.bunkerBackground)
+                    .padding(.horizontal, Spacing.lg)
+                    .padding(.vertical, Spacing.sm)
+                    .background(Color.bunkerPrimary)
+                    .clipShape(Capsule())
+            }
+            .padding(.top, Spacing.xs)
         }
         .padding(Spacing.xl)
     }
@@ -95,6 +108,15 @@ struct DecisionListView: View {
                         DecisionCard(decision: decision)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            Task {
+                                await viewModel.delete(decision)
+                            }
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 }
                 .onDelete { indexSet in
                     Task {

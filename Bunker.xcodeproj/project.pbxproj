@@ -18,6 +18,7 @@
 		694474856777321A99150E8A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912EAAE2987E0C8158E49E8 /* SettingsView.swift */; };
 		8289C725BABD4FBEC189E6A9 /* DecisionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F26C82EA74E7BCC641A1CC58 /* DecisionListView.swift */; };
 		8CFA0A9CF0E4640E23ED1A6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7D4FF89A367848113296292 /* Assets.xcassets */; };
+		A1A7CADAD9D15C2CA7E10B0F /* ShareDecisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B302BA2A4210F94A55C1F90A /* ShareDecisionView.swift */; };
 		A306C07EDA39F0DB967C90FD /* DecisionListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E2E4EF7D0E9D5905AFAB9B /* DecisionListViewModel.swift */; };
 		A6FAC880B791C5087286385A /* AIDecisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1848294F2E104D73D8D22C /* AIDecisionService.swift */; };
 		B492795DA17145F7527886A6 /* Criteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EBA0DB376C4B51A1ED21D3 /* Criteria.swift */; };
@@ -49,6 +50,7 @@
 		99C071C7D7E564055A9658E5 /* TemplatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatePickerView.swift; sourceTree = "<group>"; };
 		A8E2E4EF7D0E9D5905AFAB9B /* DecisionListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionListViewModel.swift; sourceTree = "<group>"; };
 		B1E47C95491D1C31B0F5E69F /* BunkerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerApp.swift; sourceTree = "<group>"; };
+		B302BA2A4210F94A55C1F90A /* ShareDecisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDecisionView.swift; sourceTree = "<group>"; };
 		D12B24968BEA6FE817A09982 /* Decision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decision.swift; sourceTree = "<group>"; };
 		DB510B5C1B44B872F381174A /* Bunker.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Bunker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E68BC6CCE86233B77AFBDC29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				1A8B246D74C4B5C57BB1D015 /* DecisionDashboardView.swift */,
+				B302BA2A4210F94A55C1F90A /* ShareDecisionView.swift */,
 				99C071C7D7E564055A9658E5 /* TemplatePickerView.swift */,
 			);
 			path = Components;
@@ -253,6 +256,7 @@
 				BB7C17917391584715A61653 /* Outcome.swift in Sources */,
 				23667C2A6BD4AA49A2D6357A /* OutcomeView.swift in Sources */,
 				694474856777321A99150E8A /* SettingsView.swift in Sources */,
+				A1A7CADAD9D15C2CA7E10B0F /* ShareDecisionView.swift in Sources */,
 				C5338EBDE26D7593790C6DA9 /* TemplatePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

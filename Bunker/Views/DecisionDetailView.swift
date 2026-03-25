@@ -33,7 +33,7 @@ struct DecisionDetailView: View {
         .navigationTitle("Decision")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button {
                     Task { await viewModel.simulateOutcomes() }
                 } label: {
@@ -41,7 +41,42 @@ struct DecisionDetailView: View {
                         .font(.bunkerBodySmall)
                 }
                 .disabled(viewModel.decision.criteria.isEmpty || viewModel.decision.options.isEmpty)
+
+                Menu {
+                    Button {
+                        viewModel.showShare = true
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+
+                    Button(role: .destructive) {
+                        viewModel.showDeleteConfirmation = true
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .font(.bunkerBodySmall)
+                }
             }
+        }
+        .confirmationDialog(
+            "Delete Decision",
+            isPresented: $viewModel.showDeleteConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) {
+                Task {
+                    await viewModel.delete()
+                    dismiss()
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will permanently delete \"\(viewModel.decision.title)\" and all its data. This cannot be undone.")
+        }
+        .sheet(isPresented: $viewModel.showShare) {
+            ShareDecisionView(decision: viewModel.decision, outcomes: viewModel.outcomes)
         }
         .refreshable {
             await viewModel.refresh()
@@ -264,11 +299,31 @@ struct DecisionDetailView: View {
                     .font(.bunkerLabel)
                     .foregroundStyle(Color.bunkerAccent)
                 Spacer()
+
+                Button {
+                    Task { await viewModel.generateAIAdvice() }
+                } label: {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerAccent)
+                }
             }
 
-            Text(viewModel.aiInsight)
+            Text(viewModel.aiInsight.isEmpty ? "Add options and criteria to get AI analysis..." : viewModel.aiInsight)
                 .font(.bunkerBodySmall)
-                .foregroundStyle(Color.bunkerTextSecondary)
+                .foregroundStyle(viewModel.aiInsight.isEmpty ? Color.bunkerTextTertiary : Color.bunkerTextSecondary)
+                .lineLimit(6)
+
+            // Show full AI advice if available
+            if let aiAdvice = viewModel.decision.aiAdvice, !aiAdvice.isEmpty {
+                Divider()
+                    .background(Color.bunkerDivider.opacity(0.3))
+
+                Text(aiAdvice)
+                    .font(.bunkerCaption)
+                    .foregroundStyle(Color.bunkerTextSecondary)
+                    .lineLimit(8)
+            }
         }
         .padding(Spacing.md)
         .background(Color.bunkerAccent.opacity(0.1))

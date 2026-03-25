@@ -26,7 +26,7 @@ struct SettingsView: View {
                     HStack {
                         Text("Build")
                         Spacer()
-                        Text("R1")
+                        Text("R4")
                             .foregroundStyle(Color.bunkerTextTertiary)
                     }
                 }
