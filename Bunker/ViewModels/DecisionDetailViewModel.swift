@@ -18,6 +18,8 @@ final class DecisionDetailViewModel {
     var newCriteriaName = ""
     var newCriteriaImportance = 5
     var newOptionName = ""
+    var showRecordOutcome = false
+    var journalEntryText = ""
 
     private let service = DecisionService.shared
     private let aiService = AIAnalysisService.shared
@@ -87,6 +89,26 @@ final class DecisionDetailViewModel {
 
     func delete() async {
         await service.deleteDecision(decision)
+    }
+
+    func addJournalEntry() async {
+        let text = journalEntryText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
+        let entry = JournalEntry(content: text)
+        decision.journalEntries.append(entry)
+        journalEntryText = ""
+        await save()
+    }
+
+    func removeJournalEntry(_ entry: JournalEntry) async {
+        decision.journalEntries.removeAll { $0.id == entry.id }
+        await save()
+    }
+
+    func cloneDecision() async -> Decision? {
+        let cloned = service.cloneDecision(decision)
+        await service.saveDecision(cloned)
+        return cloned
     }
 
     func refresh() async {

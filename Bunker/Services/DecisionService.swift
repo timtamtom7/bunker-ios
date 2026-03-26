@@ -68,6 +68,20 @@ final class DecisionService: ObservableObject {
         decision.options.remove(at: index)
         decision.updatedAt = Date()
     }
+    
+    func cloneDecision(_ decision: Decision) -> Decision {
+        Decision(
+            title: "\(decision.title) (Copy)",
+            description: decision.description,
+            criteria: decision.criteria.map { criteria in
+                Criteria(name: criteria.name, importance: criteria.importance, scores: [:])
+            },
+            options: decision.options,
+            stake: decision.stake,
+            reversibility: decision.reversibility,
+            timeHorizon: decision.timeHorizon
+        )
+    }
 
     func scoreCriteria(
         _ criteriaIndex: Int,

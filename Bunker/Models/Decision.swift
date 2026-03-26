@@ -12,6 +12,9 @@ struct Decision: Identifiable, Codable, Equatable {
     var reminderDate: Date?
     var resolvedAt: Date?
     var isGoodOutcome: Bool?
+    var resolvedOption: String?
+    var outcomeReflection: String?
+    var journalEntries: [JournalEntry]
     var stake: StakeLevel
     var reversibility: Reversibility
     var timeHorizon: TimeHorizon
@@ -30,6 +33,9 @@ struct Decision: Identifiable, Codable, Equatable {
         reminderDate: Date? = nil,
         resolvedAt: Date? = nil,
         isGoodOutcome: Bool? = nil,
+        resolvedOption: String? = nil,
+        outcomeReflection: String? = nil,
+        journalEntries: [JournalEntry] = [],
         stake: StakeLevel = .medium,
         reversibility: Reversibility = .moderate,
         timeHorizon: TimeHorizon = .mediumTerm,
@@ -47,6 +53,9 @@ struct Decision: Identifiable, Codable, Equatable {
         self.reminderDate = reminderDate
         self.resolvedAt = resolvedAt
         self.isGoodOutcome = isGoodOutcome
+        self.resolvedOption = resolvedOption
+        self.outcomeReflection = outcomeReflection
+        self.journalEntries = journalEntries
         self.stake = stake
         self.reversibility = reversibility
         self.timeHorizon = timeHorizon
@@ -74,6 +83,36 @@ struct Decision: Identifiable, Codable, Equatable {
     var daysUntilDeadline: Int? {
         guard let deadline = deadlineDate else { return nil }
         return Calendar.current.dateComponents([.day], from: Date(), to: deadline).day
+    }
+    
+    var isResolved: Bool {
+        resolvedOption != nil
+    }
+    
+    var statusText: String {
+        if isResolved {
+            return isGoodOutcome == true ? "Succeeded" : (isGoodOutcome == false ? "Failed" : "Resolved")
+        }
+        if allCriteriaScored {
+            return "Ready"
+        }
+        if isComplete {
+            return "Scoring"
+        }
+        return "Draft"
+    }
+}
+
+/// Journal entry for tracking notes throughout the decision-making process
+struct JournalEntry: Identifiable, Codable, Equatable {
+    let id: UUID
+    var content: String
+    let createdAt: Date
+    
+    init(id: UUID = UUID(), content: String, createdAt: Date = Date()) {
+        self.id = id
+        self.content = content
+        self.createdAt = createdAt
     }
 }
 

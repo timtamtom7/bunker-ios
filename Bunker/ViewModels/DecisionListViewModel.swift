@@ -31,6 +31,12 @@ final class DecisionListViewModel {
         decisions = service.decisions
     }
 
+    func clone(_ decision: Decision) async {
+        let cloned = service.cloneDecision(decision)
+        await service.saveDecision(cloned)
+        await load()
+    }
+
     func refresh() async {
         await load()
     }

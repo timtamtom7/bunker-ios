@@ -24,6 +24,13 @@ import SwiftUI
                 if !viewModel.outcomes.isEmpty {
                     outcomesSection
                 }
+
+                journalSection
+
+                if viewModel.decision.isResolved {
+                    retrospectiveSection
+                }
+
                 Spacer(minLength: Spacing.xxl)
             }
             .padding(.horizontal, Spacing.md)
@@ -48,6 +55,24 @@ import SwiftUI
                     } label: {
                         Label("Share", systemImage: "square.and.arrow.up")
                     }
+
+                    Button {
+                        Task {
+                            if let cloned = await viewModel.cloneDecision() {
+                                // Post notification or handle navigation
+                            }
+                        }
+                    } label: {
+                        Label("Duplicate", systemImage: "doc.on.doc")
+                    }
+
+                    Button {
+                        viewModel.showRecordOutcome = true
+                    } label: {
+                        Label("Record Outcome", systemImage: "checkmark.seal")
+                    }
+
+                    Divider()
 
                     Button(role: .destructive) {
                         viewModel.showDeleteConfirmation = true
@@ -90,6 +115,12 @@ import SwiftUI
         .sheet(isPresented: showScoringBinding) {
             scoringSheetContent
         }
+        .sheet(isPresented: Binding(
+            get: { viewModel.showRecordOutcome },
+            set: { viewModel.showRecordOutcome = $0 }
+        )) {
+            RecordOutcomeView(viewModel: viewModel)
+        }
         .onChange(of: viewModel.decision) { _, _ in
             Task { await viewModel.save() }
         }
@@ -110,6 +141,81 @@ import SwiftUI
                 set: { viewModel.showScoring = $0 })
     }
 
+    private var journalSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            JournalSection(viewModel: viewModel)
+        }
+    }
+
+    private var retrospectiveSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Text("Retrospective")
+                .font(.bunkerHeading2)
+                .foregroundStyle(Color.bunkerTextPrimary)
+
+            if let resolvedOption = viewModel.decision.resolvedOption {
+                HStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(Color.bunkerSuccess)
+                    Text("Chose:")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerTextTertiary)
+                    Text(resolvedOption)
+                        .font(.bunkerBodySmall)
+                        .fontWeight(.medium)
+                        .foregroundStyle(Color.bunkerTextPrimary)
+                }
+            }
+
+            if let isGood = viewModel.decision.isGoodOutcome {
+                HStack {
+                    Image(systemName: isGood ? "face.smiling.fill" : "face.dashed")
+                        .foregroundStyle(isGood ? Color.bunkerSuccess : Color.bunkerWarning)
+                    Text("Outcome:")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerTextTertiary)
+                    Text(isGood ? "Turned out well" : "Did not go well")
+                        .font(.bunkerBodySmall)
+                        .foregroundStyle(Color.bunkerTextPrimary)
+                }
+            }
+
+            if let reflection = viewModel.decision.outcomeReflection, !reflection.isEmpty {
+                VStack(alignment: .leading, spacing: Spacing.xxs) {
+                    Text("Reflection")
+                        .font(.bunkerCaption)
+                        .foregroundStyle(Color.bunkerTextTertiary)
+                    Text(reflection)
+                        .font(.bunkerBodySmall)
+                        .foregroundStyle(Color.bunkerTextSecondary)
+                }
+                .padding(Spacing.sm)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.bunkerSurface)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            }
+
+            Button {
+                viewModel.showRecordOutcome = true
+            } label: {
+                HStack {
+                    Image(systemName: "pencil")
+                    Text("Edit Outcome")
+                }
+                .font(.bunkerBodySmall)
+                .foregroundStyle(Color.bunkerPrimary)
+            }
+            .padding(.top, Spacing.xxs)
+        }
+        .padding(Spacing.md)
+        .background(Color.bunkerSuccess.opacity(0.05))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.bunkerSuccess.opacity(0.2), lineWidth: 1)
+        )
+    }
+
     @ViewBuilder
     private var scoringSheetContent: some View {
         if let criteriaIndex = viewModel.scoringCriteriaIndex,
@@ -126,12 +232,29 @@ import SwiftUI
 
     private var headerSection: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            TextField("Decision Title", text: Binding(
-                get: { viewModel.decision.title },
-                set: { viewModel.decision.title = $0 }
-            ))
-            .font(.bunkerHeading1)
-            .foregroundStyle(Color.bunkerTextPrimary)
+            HStack(alignment: .top) {
+                TextField("Decision Title", text: Binding(
+                    get: { viewModel.decision.title },
+                    set: { viewModel.decision.title = $0 }
+                ))
+                .font(.bunkerHeading1)
+                .foregroundStyle(Color.bunkerTextPrimary)
+
+                if viewModel.decision.allCriteriaScored && !viewModel.decision.isResolved {
+                    Button {
+                        viewModel.showRecordOutcome = true
+                    } label: {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.title2)
+                            .foregroundStyle(Color.bunkerSuccess)
+                    }
+                    .accessibilityLabel("Record outcome")
+                } else if viewModel.decision.isResolved {
+                    Image(systemName: viewModel.decision.isGoodOutcome == true ? "checkmark.seal.fill" : "xmark.seal.fill")
+                        .font(.title2)
+                        .foregroundStyle(viewModel.decision.isGoodOutcome == true ? Color.bunkerSuccess : Color.bunkerWarning)
+                }
+            }
 
             TextField("Describe the decision context...", text: Binding(
                 get: { viewModel.decision.description },

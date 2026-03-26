@@ -109,6 +109,16 @@ import SwiftUI
                     }
                     .buttonStyle(.plain)
                     .contextMenu {
+                        Button {
+                            Task {
+                                await viewModel.clone(decision)
+                            }
+                        } label: {
+                            Label("Duplicate", systemImage: "doc.on.doc")
+                        }
+
+                        Divider()
+
                         Button(role: .destructive) {
                             Task {
                                 await viewModel.delete(decision)

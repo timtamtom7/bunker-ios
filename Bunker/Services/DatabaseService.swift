@@ -1,5 +1,8 @@
 import Foundation
 import SQLite
+import os.log
+
+private let logger = Logger(subsystem: "com.bunker.database", category: "DatabaseService")
 
 final class DatabaseService: @unchecked Sendable {
     static let shared = DatabaseService()
@@ -19,6 +22,19 @@ final class DatabaseService: @unchecked Sendable {
     private let optionsData = SQLite.Expression<Data>("options_data")
     private let createdAt = SQLite.Expression<Date>("created_at")
     private let updatedAt = SQLite.Expression<Date>("updated_at")
+    // Extended columns (optional for backward compat)
+    private let deadlineDate = SQLite.Expression<Date?>("deadline_date")
+    private let reminderDate = SQLite.Expression<Date?>("reminder_date")
+    private let resolvedAt = SQLite.Expression<Date?>("resolved_at")
+    private let isGoodOutcome = SQLite.Expression<Bool?>("is_good_outcome")
+    private let resolvedOption = SQLite.Expression<String?>("resolved_option")
+    private let outcomeReflection = SQLite.Expression<String?>("outcome_reflection")
+    private let journalEntriesData = SQLite.Expression<Data?>("journal_entries_data")
+    private let stakeCol = SQLite.Expression<String?>("stake")
+    private let reversibilityCol = SQLite.Expression<String?>("reversibility")
+    private let timeHorizonCol = SQLite.Expression<String?>("time_horizon")
+    private let aiAdvice = SQLite.Expression<String?>("ai_advice")
+    private let decisionHistoryData = SQLite.Expression<Data?>("decision_history_data")
 
     // Outcome columns
     private let decisionId = SQLite.Expression<String>("decision_id")
@@ -42,12 +58,14 @@ final class DatabaseService: @unchecked Sendable {
             db = try Connection(dbPath.path)
 
             try createTables()
+            try runMigrations()
         } catch {
-            print("Database setup failed: \(error)")
+            logger.error("Database setup failed: \(error.localizedDescription)")
         }
     }
 
     private func createTables() throws {
+        // Base decisions table (all columns nullable/optional for flexibility)
         try db?.run(decisions.create(ifNotExists: true) { t in
             t.column(id, primaryKey: true)
             t.column(title)
@@ -56,6 +74,19 @@ final class DatabaseService: @unchecked Sendable {
             t.column(optionsData)
             t.column(createdAt)
             t.column(updatedAt)
+            // Extended columns (all optional for backward compat)
+            t.column(deadlineDate)
+            t.column(reminderDate)
+            t.column(resolvedAt)
+            t.column(isGoodOutcome)
+            t.column(resolvedOption)
+            t.column(outcomeReflection)
+            t.column(journalEntriesData)
+            t.column(stakeCol)
+            t.column(reversibilityCol)
+            t.column(timeHorizonCol)
+            t.column(aiAdvice)
+            t.column(decisionHistoryData)
         })
 
         try db?.run(outcomes.create(ifNotExists: true) { t in
@@ -66,6 +97,11 @@ final class DatabaseService: @unchecked Sendable {
         })
     }
 
+    private func runMigrations() throws {
+        // Future migrations can be added here
+        // e.g., check schema version and apply incremental changes
+    }
+
     // MARK: - Decision CRUD
 
     func saveDecision(_ decision: Decision) throws {
@@ -73,6 +109,8 @@ final class DatabaseService: @unchecked Sendable {
 
         let criteriaEncoded = try JSONEncoder().encode(decision.criteria)
         let optionsEncoded = try JSONEncoder().encode(decision.options)
+        let journalEncoded = try JSONEncoder().encode(decision.journalEntries)
+        let historyEncoded = try JSONEncoder().encode(decision.decisionHistory)
 
         let upsert = decisions.upsert(
             id <- decision.id.uuidString,
@@ -82,6 +120,18 @@ final class DatabaseService: @unchecked Sendable {
             optionsData <- optionsEncoded,
             createdAt <- decision.createdAt,
             updatedAt <- Date(),
+            deadlineDate <- decision.deadlineDate,
+            reminderDate <- decision.reminderDate,
+            resolvedAt <- decision.resolvedAt,
+            isGoodOutcome <- decision.isGoodOutcome,
+            resolvedOption <- decision.resolvedOption,
+            outcomeReflection <- decision.outcomeReflection,
+            journalEntriesData <- journalEncoded,
+            stakeCol <- decision.stake.rawValue,
+            reversibilityCol <- decision.reversibility.rawValue,
+            timeHorizonCol <- decision.timeHorizon.rawValue,
+            aiAdvice <- decision.aiAdvice,
+            decisionHistoryData <- historyEncoded,
             onConflictOf: id
         )
         try db.run(upsert)
@@ -92,19 +142,9 @@ final class DatabaseService: @unchecked Sendable {
 
         var result: [Decision] = []
         for row in try db.prepare(decisions.order(updatedAt.desc)) {
-            let criteria: [Criteria] = (try? JSONDecoder().decode([Criteria].self, from: row[criteriaData])) ?? []
-            let options: [String] = (try? JSONDecoder().decode([String].self, from: row[optionsData])) ?? []
-
-            let decision = Decision(
-                id: UUID(uuidString: row[id]) ?? UUID(),
-                title: row[title],
-                description: row[descriptionCol],
-                criteria: criteria,
-                options: options,
-                createdAt: row[createdAt],
-                updatedAt: row[updatedAt]
-            )
-            result.append(decision)
+            if let decision = decodeDecision(from: row) {
+                result.append(decision)
+            }
         }
         return result
     }
@@ -115,18 +155,45 @@ final class DatabaseService: @unchecked Sendable {
         let query = decisions.filter(id == decisionId.uuidString)
         guard let row = try db.pluck(query) else { return nil }
 
-        let criteria: [Criteria] = (try? JSONDecoder().decode([Criteria].self, from: row[criteriaData])) ?? []
-        let options: [String] = (try? JSONDecoder().decode([String].self, from: row[optionsData])) ?? []
+        return decodeDecision(from: row)
+    }
 
-        return Decision(
-            id: UUID(uuidString: row[id]) ?? UUID(),
-            title: row[title],
-            description: row[descriptionCol],
-            criteria: criteria,
-            options: options,
-            createdAt: row[createdAt],
-            updatedAt: row[updatedAt]
-        )
+    private func decodeDecision(from row: Row) -> Decision? {
+        do {
+            let criteria: [Criteria] = (try? JSONDecoder().decode([Criteria].self, from: row[criteriaData])) ?? []
+            let options: [String] = (try? JSONDecoder().decode([String].self, from: row[optionsData])) ?? []
+            let journalEntries: [JournalEntry] = (try? JSONDecoder().decode([JournalEntry].self, from: row[journalEntriesData] ?? Data())) ?? []
+            let history: [DecisionHistoryEntry] = (try? JSONDecoder().decode([DecisionHistoryEntry].self, from: row[decisionHistoryData] ?? Data())) ?? []
+
+            let stake = row[stakeCol].flatMap { StakeLevel(rawValue: $0) } ?? .medium
+            let reversibility = row[reversibilityCol].flatMap { Reversibility(rawValue: $0) } ?? .moderate
+            let timeHorizon = row[timeHorizonCol].flatMap { TimeHorizon(rawValue: $0) } ?? .mediumTerm
+
+            return Decision(
+                id: UUID(uuidString: row[id]) ?? UUID(),
+                title: row[title],
+                description: row[descriptionCol],
+                criteria: criteria,
+                options: options,
+                createdAt: row[createdAt],
+                updatedAt: row[updatedAt],
+                deadlineDate: row[deadlineDate],
+                reminderDate: row[reminderDate],
+                resolvedAt: row[resolvedAt],
+                isGoodOutcome: row[isGoodOutcome],
+                resolvedOption: row[resolvedOption],
+                outcomeReflection: row[outcomeReflection],
+                journalEntries: journalEntries,
+                stake: stake,
+                reversibility: reversibility,
+                timeHorizon: timeHorizon,
+                aiAdvice: row[aiAdvice],
+                decisionHistory: history
+            )
+        } catch {
+            logger.error("Failed to decode decision: \(error.localizedDescription)")
+            return nil
+        }
     }
 
     func deleteDecision(id decisionId: UUID) throws {
