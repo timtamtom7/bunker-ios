@@ -47,7 +47,10 @@ final class DatabaseService: @unchecked Sendable {
     private func setupDatabase() {
         do {
             let fileManager = FileManager.default
-            let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            guard let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+                print("Database setup error: application support directory not available")
+                return
+            }
             let dbFolder = appSupport.appendingPathComponent("Bunker", isDirectory: true)
 
             if !fileManager.fileExists(atPath: dbFolder.path) {
