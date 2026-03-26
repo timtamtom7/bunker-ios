@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		0549949E9249FB62842E6CC9 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F9BECD863C2D897142541 /* EmptyStateView.swift */; };
 		107AE1A06A4659ABD2619847 /* DecisionTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750DFBC8464AD204199139A2 /* DecisionTemplate.swift */; };
+		12411671C8D600FFBF883E1C /* BunkerR11Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45A64D0940DBF73BAEE228E /* BunkerR11Service.swift */; };
 		1DC8283FA15EE70C2AB68ABA /* CalendarSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F24CBCEAE6D8FEB009D330C /* CalendarSyncService.swift */; };
 		1E520D2602DB65D7C3BE0FCC /* Decision.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12B24968BEA6FE817A09982 /* Decision.swift */; };
+		1F6432ED009C58AAE39340EA /* BunkerR12Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC32567403F0C5B9CBB07B5 /* BunkerR12Service.swift */; };
 		23667C2A6BD4AA49A2D6357A /* OutcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4E61C08F6A48845EB1851E /* OutcomeView.swift */; };
 		2B4A0A47CBA2029CFCE15188 /* DecisionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167028B2FC574A2D52810D9D /* DecisionDetailView.swift */; };
+		2D59A35DED0B8897C5C5E81A /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6CCA98B233906EBB9D8061 /* CommunityView.swift */; };
 		320AEE73D50DACBC5A030418 /* BunkerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E47C95491D1C31B0F5E69F /* BunkerApp.swift */; };
 		3AE29434DEA8B4DF8BD42101 /* DecisionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98021A0FE2008175F374B9D5 /* DecisionDetailViewModel.swift */; };
 		5F3FC732C67F5D4D6249F6F9 /* NewDecisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE386331DA98483F11BEC57 /* NewDecisionView.swift */; };
@@ -68,6 +71,8 @@
 		53D4220F42D7F3CB15A36C0C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		55238E0187812C8084D39C64 /* TemplatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesView.swift; sourceTree = "<group>"; };
 		575618A52B0822B6F79D9EE1 /* DecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionService.swift; sourceTree = "<group>"; };
+		5B6CCA98B233906EBB9D8061 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		5BC32567403F0C5B9CBB07B5 /* BunkerR12Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerR12Service.swift; sourceTree = "<group>"; };
 		5CE6A4BA7BE8E294260C059E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5F51D305B56F501B135DD179 /* UIAnimationHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAnimationHelpers.swift; sourceTree = "<group>"; };
 		6F48A1B89C5090EDC5C3DE70 /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
@@ -94,6 +99,7 @@
 		E68BC6CCE86233B77AFBDC29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E7D4FF89A367848113296292 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F26C82EA74E7BCC641A1CC58 /* DecisionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionListView.swift; sourceTree = "<group>"; };
+		F45A64D0940DBF73BAEE228E /* BunkerR11Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerR11Service.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		7D45235F8E775C2603F9154A /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				5B6CCA98B233906EBB9D8061 /* CommunityView.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
 		8B0A34370160CD14C7B5050A /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +199,7 @@
 		A14CD6E181C64ED4BF1840C9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D45235F8E775C2603F9154A /* Community */,
 				8B0A34370160CD14C7B5050A /* Components */,
 				1D18DAB101CBDD07CC7A533E /* Groups */,
 				B99CBBFB1D9EC866ED56DC3C /* Stats */,
@@ -242,6 +257,8 @@
 				02C5AF5AA40696485561866F /* AchievementService.swift */,
 				81E6FC0A5AF2E75F78A7462C /* AIAnalysisService.swift */,
 				3C1848294F2E104D73D8D22C /* AIDecisionService.swift */,
+				F45A64D0940DBF73BAEE228E /* BunkerR11Service.swift */,
+				5BC32567403F0C5B9CBB07B5 /* BunkerR12Service.swift */,
 				3F24CBCEAE6D8FEB009D330C /* CalendarSyncService.swift */,
 				8CB176A2D16B31E71F08B72E /* DatabaseService.swift */,
 				575618A52B0822B6F79D9EE1 /* DecisionService.swift */,
@@ -334,8 +351,11 @@
 				FD9284ABB73B45CB4CA1E772 /* AchievementsView.swift in Sources */,
 				B2304C9B88DB9AB5AF5687F2 /* AnalyticsDashboardView.swift in Sources */,
 				320AEE73D50DACBC5A030418 /* BunkerApp.swift in Sources */,
+				12411671C8D600FFBF883E1C /* BunkerR11Service.swift in Sources */,
+				1F6432ED009C58AAE39340EA /* BunkerR12Service.swift in Sources */,
 				1DC8283FA15EE70C2AB68ABA /* CalendarSyncService.swift in Sources */,
 				61988B28E2D8376CFA93DC52 /* CommentsView.swift in Sources */,
+				2D59A35DED0B8897C5C5E81A /* CommunityView.swift in Sources */,
 				CA6C07A852BC2972D0B3ADB1 /* ContentView.swift in Sources */,
 				B492795DA17145F7527886A6 /* Criteria.swift in Sources */,
 				C21A5E4730912E8A49AC63D6 /* DatabaseService.swift in Sources */,

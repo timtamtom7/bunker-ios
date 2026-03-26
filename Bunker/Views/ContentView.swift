@@ -29,6 +29,12 @@ import SwiftUI
                             Label("Settings", systemImage: "gearshape.fill")
                         }
                         .tag(2)
+                    
+                    CommunityView()
+                        .tabItem {
+                            Label("Community", systemImage: "person.3.fill")
+                        }
+                        .tag(3)
                 }
                 .tint(Color.bunkerPrimary)
             }
@@ -81,6 +87,9 @@ import SwiftUI
                     NavigationLink(destination: AchievementsView()) {
                         Label("Achievements", systemImage: "medal.fill")
                     }
+                    NavigationLink(destination: CommunityView()) {
+                        Label("Community", systemImage: "person.3.fill")
+                    }
                 }
 
                 Section("Tools") {
@@ -102,6 +111,8 @@ import SwiftUI
                 OutcomeHistoryView()
             case 2:
                 SettingsView()
+            case 3:
+                CommunityView()
             default:
                 DecisionListView()
             }

@@ -72,6 +72,24 @@ extension Color {
 }
 
 // MARK: - Font Extensions
+
+extension ShapeStyle where Self == Color {
+    static var bunkerPrimary: Color { Color.bunkerPrimary }
+    static var bunkerSecondary: Color { Color.bunkerSecondary }
+    static var bunkerAccent: Color { Color.bunkerAccent }
+    static var bunkerBackground: Color { Color.bunkerBackground }
+    static var bunkerSurface: Color { Color.bunkerSurface }
+    static var bunkerSurfaceCard: Color { Color.bunkerSurfaceCard }
+    static var bunkerTextPrimary: Color { Color.bunkerTextPrimary }
+    static var bunkerTextSecondary: Color { Color.bunkerTextSecondary }
+    static var bunkerTextTertiary: Color { Color.bunkerTextTertiary }
+    static var bunkerError: Color { Color.bunkerError }
+    static var bunkerSuccess: Color { Color.bunkerSuccess }
+    static var bunkerWarning: Color { Color.bunkerWarning }
+    static var bunkerDivider: Color { Color.bunkerDivider }
+}
+
+
 extension Font {
     static let bunkerDisplay = Font.system(size: 34, weight: .bold, design: .default)
     static let bunkerHeading1 = Font.system(size: 28, weight: .semibold, design: .default)
