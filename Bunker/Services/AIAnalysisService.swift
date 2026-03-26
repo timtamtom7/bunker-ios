@@ -69,11 +69,9 @@ final class AIAnalysisService: ObservableObject {
     }
 
     func generateOutcomeSummary(outcomes: [Outcome]) -> String {
-        guard !outcomes.isEmpty else {
+        guard let top = outcomes.first else {
             return "No outcomes to analyze yet."
         }
-
-        let top = outcomes.first!
         let confidence: String
         if top.confidence >= 80 {
             confidence = "high confidence"

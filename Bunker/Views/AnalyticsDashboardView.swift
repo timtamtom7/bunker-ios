@@ -305,12 +305,11 @@ struct AnalyticsDashboardView: View {
     // MARK: - Data Loading
 
     private func loadData() async {
-        // Load decisions from DecisionService
-        let service = await DecisionService.shared
-        await MainActor.run {
-            decisions = service.decisions
-            isLoading = false
-        }
+        isLoading = true
+        defer { isLoading = false }
+
+        await DecisionService.shared.loadDecisions()
+        decisions = DecisionService.shared.decisions
     }
 }
 

@@ -114,7 +114,7 @@ final class AIDecisionService: @unchecked Sendable {
             var totalWeight: Double = 0
             
             for criterion in decision.criteria {
-                let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(optionIndex)")!
+                let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(optionIndex)") ?? UUID()
                 let score = criterion.score(for: optionId)
                 if score > 0 {
                     totalScore += Double(score) * Double(criterion.importance)

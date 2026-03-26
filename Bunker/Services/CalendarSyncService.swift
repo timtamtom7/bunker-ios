@@ -93,7 +93,7 @@ final class CalendarSyncService: @unchecked Sendable {
         do {
             try eventStore.remove(event, span: .thisEvent)
         } catch {
-            // Silently fail
+            print("CalendarSyncService: failed to remove event: \(error)")
         }
     }
 
@@ -112,7 +112,7 @@ final class CalendarSyncService: @unchecked Sendable {
         do {
             try eventStore.save(event, span: .thisEvent)
         } catch {
-            // Silently fail
+            print("CalendarSyncService: failed to save event: \(error)")
         }
     }
 
