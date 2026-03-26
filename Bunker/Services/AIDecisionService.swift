@@ -109,12 +109,13 @@ final class AIDecisionService: @unchecked Sendable {
     private func leadingOption(for decision: Decision) -> String? {
         var optionScores: [String: Double] = [:]
         
-        for option in decision.options {
+        for (optionIndex, option) in decision.options.enumerated() {
             var totalScore: Double = 0
             var totalWeight: Double = 0
             
             for criterion in decision.criteria {
-                let score = criterion.score(for: UUID())
+                let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(optionIndex)")!
+                let score = criterion.score(for: optionId)
                 if score > 0 {
                     totalScore += Double(score) * Double(criterion.importance)
                     totalWeight += Double(criterion.importance)
