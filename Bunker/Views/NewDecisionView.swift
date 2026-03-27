@@ -19,6 +19,7 @@ import SwiftUI
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     // Template picker
                     Button {
+                        HapticFeedback.light()
                         showTemplatePicker = true
                     } label: {
                         HStack {
@@ -40,6 +41,8 @@ import SwiftUI
                                 .stroke(Color.bunkerAccent.opacity(0.3), lineWidth: 1)
                         )
                     }
+                    .accessibilityLabel("Use a decision template")
+                    .accessibilityHint("Opens template picker to start with a pre-made decision framework")
 
                     // Title
                     VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -170,11 +173,13 @@ import SwiftUI
                                 Spacer()
 
                                 Button {
+                                    HapticFeedback.light()
                                     options.remove(at: index)
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundStyle(Color.bunkerTextTertiary)
                                 }
+                                .accessibilityLabel("Remove \(option)")
                             }
                             .padding(Spacing.sm)
                             .background(Color.bunkerSurface)
@@ -190,6 +195,7 @@ import SwiftUI
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
 
                             Button {
+                                HapticFeedback.medium()
                                 let trimmed = newOption.trimmingCharacters(in: .whitespaces)
                                 if !trimmed.isEmpty {
                                     options.append(trimmed)
@@ -201,6 +207,8 @@ import SwiftUI
                                     .foregroundStyle(Color.bunkerPrimary)
                             }
                             .disabled(newOption.trimmingCharacters(in: .whitespaces).isEmpty)
+                            .accessibilityLabel("Add option")
+                            .accessibilityHint("Adds the typed option to your decision options")
                         }
                     }
 
@@ -213,10 +221,15 @@ import SwiftUI
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") { dismiss() }
+                    Button("Cancel") { 
+                        HapticFeedback.light()
+                        dismiss() 
+                    }
+                    .accessibilityLabel("Cancel creating decision")
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Create") {
+                        HapticFeedback.success()
                         let decision = Decision(
                             title: title.trimmingCharacters(in: .whitespaces),
                             description: description.trimmingCharacters(in: .whitespaces),
@@ -229,6 +242,8 @@ import SwiftUI
                         dismiss()
                     }
                     .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty || options.count < 2)
+                    .accessibilityLabel("Create decision")
+                    .accessibilityHint("Creates a new decision with the provided information")
                 }
             }
             .sheet(isPresented: $showTemplatePicker) {

@@ -135,7 +135,7 @@ struct JournalEntryRow: View {
 
                 HStack(spacing: Spacing.xs) {
                     Image(systemName: "clock")
-                        .font(.system(size: 10))
+                        .font(.system(size: 11))
                     Text(formattedDate)
                         .font(.bunkerCaption)
                 }

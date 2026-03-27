@@ -128,7 +128,7 @@ struct TemplatePickerCard: View {
                     ForEach(template.options.prefix(3), id: \.self) { option in
                         HStack {
                             Image(systemName: "square.stack.3d.up.fill")
-                                .font(.system(size: 10))
+                                .font(.system(size: 11))
                                 .foregroundStyle(Color.bunkerPrimary)
 
                             Text(option)

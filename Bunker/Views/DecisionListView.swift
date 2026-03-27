@@ -35,6 +35,7 @@ import SwiftUI
                     HStack {
                         Spacer()
                         Button {
+                            HapticFeedback.medium()
                             viewModel.showNewDecision = true
                         } label: {
                             Image(systemName: "plus")
@@ -47,6 +48,8 @@ import SwiftUI
                         }
                         .padding(.trailing, Spacing.lg)
                         .padding(.bottom, Spacing.lg)
+                        .accessibilityLabel("Create new decision")
+                        .accessibilityHint("Opens the new decision form to create a decision")
                     }
                 }
             }
@@ -85,6 +88,7 @@ import SwiftUI
                 .multilineTextAlignment(.center)
 
             Button {
+                HapticFeedback.medium()
                 viewModel.showNewDecision = true
             } label: {
                 Text("Create Your First Decision")
@@ -96,6 +100,8 @@ import SwiftUI
                     .clipShape(Capsule())
             }
             .padding(.top, Spacing.xs)
+            .accessibilityLabel("Create your first decision")
+            .accessibilityHint("Opens the new decision form")
         }
         .padding(Spacing.xl)
     }
@@ -110,22 +116,26 @@ import SwiftUI
                     .buttonStyle(.plain)
                     .contextMenu {
                         Button {
+                            HapticFeedback.medium()
                             Task {
                                 await viewModel.clone(decision)
                             }
                         } label: {
                             Label("Duplicate", systemImage: "doc.on.doc")
                         }
+                        .accessibilityLabel("Duplicate \(decision.title)")
 
                         Divider()
 
                         Button(role: .destructive) {
+                            HapticFeedback.heavy()
                             Task {
                                 await viewModel.delete(decision)
                             }
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
+                        .accessibilityLabel("Delete \(decision.title)")
                     }
                 }
                 .onDelete { indexSet in

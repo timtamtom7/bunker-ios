@@ -262,12 +262,12 @@ struct DecisionTimelineView: View {
                     .frame(width: 10, height: 10)
 
                 Text(phase.label)
-                    .font(.system(size: 10, weight: .medium))
+                    .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(phase.isToday ? Color.bunkerAccent : Color.bunkerTextSecondary)
 
                 if let date = phase.date {
                     Text(date.formatted(date: .abbreviated, time: .omitted))
-                        .font(.system(size: 9))
+                        .font(.system(size: 11))
                         .foregroundStyle(Color.bunkerTextTertiary)
                 }
             }

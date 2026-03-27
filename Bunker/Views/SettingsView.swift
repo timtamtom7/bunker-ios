@@ -14,6 +14,11 @@ struct SettingsView: View {
                         Text("System").tag("system")
                     }
                     .pickerStyle(.menu)
+                    .onChange(of: colorScheme) { _, _ in
+                        HapticFeedback.selection()
+                    }
+                    .accessibilityLabel("Theme selection")
+                    .accessibilityValue(colorScheme == "dark" ? "Dark mode" : colorScheme == "light" ? "Light mode" : "System default")
                 }
 
                 Section("About") {
