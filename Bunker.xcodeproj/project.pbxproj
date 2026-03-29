@@ -35,6 +35,7 @@
 		5FB14D1B5C034663A20EB2CD /* AIAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E6FC0A5AF2E75F78A7462C /* AIAnalysisService.swift */; };
 		5FB2B7E92938022656C672C1 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4718CC93B6C9768ED0E5A4CA /* AppKit.framework */; };
 		61988B28E2D8376CFA93DC52 /* CommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B2998DA61DE93A34E4DD69 /* CommentsView.swift */; };
+		6546240EE6071C161B26E072 /* DecisionRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5BE9CFE064B4B4E0D4BE97 /* DecisionRoomService.swift */; };
 		694474856777321A99150E8A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912EAAE2987E0C8158E49E8 /* SettingsView.swift */; };
 		69A790095EA7C9A49E2DECC3 /* UIAnimationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F51D305B56F501B135DD179 /* UIAnimationHelpers.swift */; };
 		6AC74CF8474260A0420DE27D /* MacExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC0F5876580ED65E66750EE /* MacExportService.swift */; };
@@ -80,6 +81,9 @@
 		D67C2207A9CB723E43D879AF /* DecisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575618A52B0822B6F79D9EE1 /* DecisionService.swift */; };
 		DC77C6F4CD4A517AB8D4E3EB /* AIDecisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1848294F2E104D73D8D22C /* AIDecisionService.swift */; };
 		E6147F17DCBE779CF501BB28 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81A51D8CE01883E756E0C90 /* Theme.swift */; };
+		EC04C89302C16EF4524CA8DC /* MacAdvisorShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2989ED793279218E182B9A62 /* MacAdvisorShareView.swift */; };
+		EEB55D9C015E8F1854FA45BD /* DecisionRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5BE9CFE064B4B4E0D4BE97 /* DecisionRoomService.swift */; };
+		F4D4907458558B000DB914A6 /* MacDecisionRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29B07DFF45DC8AB5F0EB425 /* MacDecisionRoomView.swift */; };
 		F54845489E5470409D72614D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5CE6A4BA7BE8E294260C059E /* PrivacyInfo.xcprivacy */; };
 		FCF92630571C6113D4BFDE55 /* DecisionComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98132BA2B2CC41CA7872E10C /* DecisionComment.swift */; };
 		FD9284ABB73B45CB4CA1E772 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F48A1B89C5090EDC5C3DE70 /* AchievementsView.swift */; };
@@ -95,12 +99,14 @@
 		1A336E4E3E064EBD32C77AA7 /* NaturalLanguage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NaturalLanguage.framework; path = System/Library/Frameworks/NaturalLanguage.framework; sourceTree = SDKROOT; };
 		1A8B246D74C4B5C57BB1D015 /* DecisionDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionDashboardView.swift; sourceTree = "<group>"; };
 		28CE31DF299D9255BFF5FB57 /* MacOptionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOptionRow.swift; sourceTree = "<group>"; };
+		2989ED793279218E182B9A62 /* MacAdvisorShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAdvisorShareView.swift; sourceTree = "<group>"; };
 		29BB8BB6A8A22994937E19EB /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		2BD9F6AAAFB21DAAD14D50D2 /* MacCriteriaRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacCriteriaRow.swift; sourceTree = "<group>"; };
 		393647C8CAC012671371284E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		3A4E61C08F6A48845EB1851E /* OutcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeView.swift; sourceTree = "<group>"; };
 		3BFA75C190EC1E86D19F8DA6 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EventKit.framework; sourceTree = "<group>"; };
 		3C1848294F2E104D73D8D22C /* AIDecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDecisionService.swift; sourceTree = "<group>"; };
+		3C5BE9CFE064B4B4E0D4BE97 /* DecisionRoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionRoomService.swift; sourceTree = "<group>"; };
 		3F24CBCEAE6D8FEB009D330C /* CalendarSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSyncService.swift; sourceTree = "<group>"; };
 		407DDBE4F60F70E07EE7458D /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		42B2998DA61DE93A34E4DD69 /* CommentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsView.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 		E7D4FF89A367848113296292 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EA1E8F28B9A3F1F668124913 /* MacSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacSettingsView.swift; sourceTree = "<group>"; };
 		F26C82EA74E7BCC641A1CC58 /* DecisionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionListView.swift; sourceTree = "<group>"; };
+		F29B07DFF45DC8AB5F0EB425 /* MacDecisionRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacDecisionRoomView.swift; sourceTree = "<group>"; };
 		F45A64D0940DBF73BAEE228E /* BunkerR11Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerR11Service.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +366,7 @@
 				5BC32567403F0C5B9CBB07B5 /* BunkerR12Service.swift */,
 				3F24CBCEAE6D8FEB009D330C /* CalendarSyncService.swift */,
 				8CB176A2D16B31E71F08B72E /* DatabaseService.swift */,
+				3C5BE9CFE064B4B4E0D4BE97 /* DecisionRoomService.swift */,
 				575618A52B0822B6F79D9EE1 /* DecisionService.swift */,
 				29BB8BB6A8A22994937E19EB /* ExportService.swift */,
 				C8F30D5BA18B30C7159B70D1 /* FreemiumService.swift */,
@@ -373,10 +381,12 @@
 			children = (
 				6C94FD04405D333EDAFA432F /* BunkerMacApp.swift */,
 				086A6F407FC668F829818240 /* BunkerMenuBar.swift */,
+				2989ED793279218E182B9A62 /* MacAdvisorShareView.swift */,
 				C74078B4CFE6F551C0E1203E /* MacAIAnalysisView.swift */,
 				4B629ABD43BD344E55BB7222 /* MacContentView.swift */,
 				2BD9F6AAAFB21DAAD14D50D2 /* MacCriteriaRow.swift */,
 				06D3A6589303D08572BB9CBE /* MacDecisionEditorView.swift */,
+				F29B07DFF45DC8AB5F0EB425 /* MacDecisionRoomView.swift */,
 				BCC0F5876580ED65E66750EE /* MacExportService.swift */,
 				5C644C36DBF9A351101FC00D /* MacNewDecisionView.swift */,
 				28CE31DF299D9255BFF5FB57 /* MacOptionRow.swift */,
@@ -505,11 +515,14 @@
 				FCF92630571C6113D4BFDE55 /* DecisionComment.swift in Sources */,
 				B47115A4520A28FB031C880A /* DecisionDetailViewModel.swift in Sources */,
 				102AD1D70D053D0249E48F60 /* DecisionListViewModel.swift in Sources */,
+				6546240EE6071C161B26E072 /* DecisionRoomService.swift in Sources */,
 				3C411DAD8180F472688FCBB9 /* DecisionTemplate.swift in Sources */,
 				C8075F7DA43DF42BC609B028 /* MacAIAnalysisView.swift in Sources */,
+				EC04C89302C16EF4524CA8DC /* MacAdvisorShareView.swift in Sources */,
 				A841E391BD5E945447661FF6 /* MacContentView.swift in Sources */,
 				0C6F5FAFE39A5DF6630B7AD0 /* MacCriteriaRow.swift in Sources */,
 				35532FD05177E9AB2AD5CF01 /* MacDecisionEditorView.swift in Sources */,
+				F4D4907458558B000DB914A6 /* MacDecisionRoomView.swift in Sources */,
 				1F8097397BBB9514692ED522 /* MacDecisionService.swift in Sources */,
 				6AC74CF8474260A0420DE27D /* MacExportService.swift in Sources */,
 				B02E0AC72EF0D98DE9E6E8F8 /* MacNewDecisionView.swift in Sources */,
@@ -545,6 +558,7 @@
 				3AE29434DEA8B4DF8BD42101 /* DecisionDetailViewModel.swift in Sources */,
 				8289C725BABD4FBEC189E6A9 /* DecisionListView.swift in Sources */,
 				A306C07EDA39F0DB967C90FD /* DecisionListViewModel.swift in Sources */,
+				EEB55D9C015E8F1854FA45BD /* DecisionRoomService.swift in Sources */,
 				D67C2207A9CB723E43D879AF /* DecisionService.swift in Sources */,
 				701631C6005391BD5FE28395 /* DecisionStatsView.swift in Sources */,
 				107AE1A06A4659ABD2619847 /* DecisionTemplate.swift in Sources */,

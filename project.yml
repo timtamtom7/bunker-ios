@@ -56,6 +56,7 @@ targets:
       - path: Bunker/Services/DatabaseService.swift
       - path: Bunker/Services/AIDecisionService.swift
       - path: Bunker/Services/AIAnalysisService.swift
+      - path: Bunker/Services/DecisionRoomService.swift
       - path: BunkerMac/MacServices
       - path: Bunker/ViewModels
       - path: Bunker/Assets.xcassets
