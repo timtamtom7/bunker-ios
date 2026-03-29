@@ -46,3 +46,35 @@ targets:
         product: SQLite
       - framework: EventKit.framework
         embed: false
+
+  BunkerMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: BunkerMac/Sources
+      - path: Bunker/Models
+      - path: Bunker/Services/DatabaseService.swift
+      - path: Bunker/Services/AIDecisionService.swift
+      - path: Bunker/Services/AIAnalysisService.swift
+      - path: BunkerMac/MacServices
+      - path: Bunker/ViewModels
+      - path: Bunker/Assets.xcassets
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bunker.macos
+        INFOPLIST_KEY_CFBundleDisplayName: BunkerMac
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: NO
+        CODE_SIGNING_ALLOWED: NO
+    dependencies:
+      - sdk: SwiftUI.framework
+      - sdk: AppKit.framework
+      - sdk: NaturalLanguage.framework
+      - sdk: UserNotifications.framework
+      - package: SQLite
+        product: SQLite
