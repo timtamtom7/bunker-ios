@@ -48,6 +48,7 @@
 		93C7E8A03EA466EDAA8EA95C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44979EC8C570727CFE57254 /* NotificationService.swift */; };
 		964A1085E710B2784CD90019 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BFA75C190EC1E86D19F8DA6 /* EventKit.framework */; };
 		973A20F37CD48098CCEFB5AD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F7B29B8BA3C68557EBB8043 /* SwiftUI.framework */; };
+		977D5035059827AF8C5F2959 /* MacOutcomeSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FD7D16E3A287BB628C2142 /* MacOutcomeSimulatorView.swift */; };
 		9F37E8C94CEBCB0015507ED9 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D4220F42D7F3CB15A36C0C /* GroupsView.swift */; };
 		9FC83DACC513CE372896E0F8 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BB8BB6A8A22994937E19EB /* ExportService.swift */; };
 		9FF2FE78549CE7DBFA7BC01C /* TemplatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55238E0187812C8084D39C64 /* TemplatesView.swift */; };
@@ -110,6 +111,7 @@
 		53D4220F42D7F3CB15A36C0C /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		55238E0187812C8084D39C64 /* TemplatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesView.swift; sourceTree = "<group>"; };
 		575618A52B0822B6F79D9EE1 /* DecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionService.swift; sourceTree = "<group>"; };
+		58FD7D16E3A287BB628C2142 /* MacOutcomeSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacOutcomeSimulatorView.swift; sourceTree = "<group>"; };
 		5B6CCA98B233906EBB9D8061 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
 		5BC32567403F0C5B9CBB07B5 /* BunkerR12Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerR12Service.swift; sourceTree = "<group>"; };
 		5C644C36DBF9A351101FC00D /* MacNewDecisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacNewDecisionView.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				BCC0F5876580ED65E66750EE /* MacExportService.swift */,
 				5C644C36DBF9A351101FC00D /* MacNewDecisionView.swift */,
 				28CE31DF299D9255BFF5FB57 /* MacOptionRow.swift */,
+				58FD7D16E3A287BB628C2142 /* MacOutcomeSimulatorView.swift */,
 				EA1E8F28B9A3F1F668124913 /* MacSettingsView.swift */,
 			);
 			name = Sources;
@@ -511,6 +514,7 @@
 				6AC74CF8474260A0420DE27D /* MacExportService.swift in Sources */,
 				B02E0AC72EF0D98DE9E6E8F8 /* MacNewDecisionView.swift in Sources */,
 				CB77ED61DD5E83369FA6FF3E /* MacOptionRow.swift in Sources */,
+				977D5035059827AF8C5F2959 /* MacOutcomeSimulatorView.swift in Sources */,
 				A435C6A4B912CBC892525570 /* MacSettingsView.swift in Sources */,
 				269F47FF9BE208D0BB328FB0 /* Outcome.swift in Sources */,
 			);

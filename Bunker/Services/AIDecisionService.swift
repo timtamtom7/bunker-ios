@@ -144,6 +144,169 @@ final class AIDecisionService: @unchecked Sendable {
         return questions.randomElement() ?? "What would you do if you couldn't reverse this decision?"
     }
     
+    // MARK: - AI Analysis
+
+    func analyzeDecision(_ decision: Decision) -> AIAnalysis {
+        guard decision.isComplete else {
+            return AIAnalysis(
+                scenarios: [],
+                blindSpots: ["Decision is incomplete — add criteria and options."],
+                missingInfo: ["At least one criterion", "At least two options"],
+                recommendation: "Complete your decision setup before seeking AI analysis.",
+                confidenceScore: 0
+            )
+        }
+
+        var scenarios: [Scenario] = []
+        var blindSpots: [String] = []
+        var missingInfo: [String] = []
+        var recommendation: String = ""
+        var confidenceScore: Double = 50
+
+        // Generate scenarios based on criteria
+        let scoredCount = decision.criteria.filter { $0.isScored }.count
+        let totalCriteria = decision.criteria.count
+
+        for (index, option) in decision.options.enumerated() {
+            let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(index)") ?? UUID()
+            var totalWeighted: Double = 0
+            var totalWeight: Double = 0
+
+            for criterion in decision.criteria {
+                let score = criterion.score(for: optionId)
+                if score > 0 {
+                    totalWeighted += Double(score) * Double(criterion.importance)
+                    totalWeight += Double(criterion.importance)
+                }
+            }
+
+            let normalizedScore = totalWeight > 0 ? totalWeighted / totalWeight : 0
+            let probability = min(1.0, max(0.0, normalizedScore / 10.0))
+
+            let scenario = Scenario(
+                title: option,
+                probability: probability,
+                outcome: generateOutcomeDescription(for: option, score: normalizedScore, criteria: decision.criteria, decision: decision)
+            )
+            scenarios.append(scenario)
+        }
+
+        // Sort scenarios by probability
+        scenarios.sort { $0.probability > $1.probability }
+
+        // Identify blind spots
+        let criteriaText = decision.criteria.map { $0.name.lowercased() }.joined(separator: " ")
+        if !criteriaText.contains("cost") && !criteriaText.contains("budget") && !criteriaText.contains("value") {
+            blindSpots.append("Cost/value not explicitly weighed against other factors")
+        }
+        if !criteriaText.contains("risk") && !criteriaText.contains("downside") && !criteriaText.contains("failure") {
+            blindSpots.append("No risk or downside analysis — what could go wrong?")
+        }
+        if !criteriaText.contains("time") && !criteriaText.contains("duration") {
+            blindSpots.append("Time investment not considered — how much time does each option require?")
+        }
+        if decision.options.count < 2 {
+            blindSpots.append("Only one option defined — consider alternatives")
+        }
+        if decision.options.count > 5 {
+            blindSpots.append("Many options may indicate scope creep — narrow to 2-3 strong candidates")
+        }
+        if decision.stake == .critical && blindSpots.count < 2 {
+            blindSpots.append("Critical stakes demand extra scrutiny — consider seeking external input")
+        }
+        if scoredCount < totalCriteria {
+            blindSpots.append("\(totalCriteria - scoredCount) criteria are unscored — these affect recommendation quality")
+        }
+
+        // Identify missing information
+        if decision.title.count < 10 {
+            missingInfo.append("Decision title is brief — add more context for better analysis")
+        }
+        if decision.description.count < 20 {
+            missingInfo.append("Decision description lacks detail — what background is important?")
+        }
+        if decision.deadlineDate == nil {
+            missingInfo.append("No deadline set — time constraints affect the decision context")
+        }
+        if scoredCount < totalCriteria {
+            missingInfo.append("Score all \(totalCriteria) criteria to improve confidence")
+        }
+        if decision.stake == .low && missingInfo.isEmpty {
+            missingInfo.append("Consider: what would change your mind about this choice?")
+        }
+
+        // Calculate confidence
+        var confidence: Double = 50
+        confidence += Double(scoredCount) / Double(max(1, totalCriteria)) * 30
+        confidence += decision.options.isEmpty ? 0 : 10
+        confidence += blindSpots.isEmpty ? 10 : max(0, 10 - Double(blindSpots.count) * 2)
+        confidenceScore = min(95, max(10, confidence))
+
+        // Generate recommendation
+        if let topScenario = scenarios.first {
+            if topScenario.probability > 0.7 {
+                recommendation = "'\(topScenario.title)' shows strong alignment with your weighted criteria. Proceed if this feels right."
+            } else if topScenario.probability > 0.5 {
+                recommendation = "'\(topScenario.title)' is leading, but the gap to alternatives is narrow. Consider refining your criteria."
+            } else {
+                recommendation = "No clear leader yet. Score all criteria and consider whether your weights reflect your true priorities."
+            }
+        }
+
+        if decision.stake == .critical {
+            recommendation = "⚠️ Critical decision — sleep on it. Get a second opinion. Document your reasoning. \(recommendation)"
+        }
+
+        if !blindSpots.isEmpty {
+            recommendation += "\n\nKey concern: \(blindSpots.first ?? "Review your blind spots above.")"
+        }
+
+        return AIAnalysis(
+            scenarios: scenarios,
+            blindSpots: blindSpots,
+            missingInfo: missingInfo,
+            recommendation: recommendation,
+            confidenceScore: confidenceScore
+        )
+    }
+
+    private func generateOutcomeDescription(for option: String, score: Double, criteria: [Criteria], decision: Decision) -> String {
+        let strengths = criteria.filter { c in
+            let optIdx = decision.options.firstIndex(of: option) ?? 0
+            let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(optIdx)") ?? UUID()
+            return c.score(for: optionId) >= 7
+        }.map { $0.name }
+
+        let weaknesses = criteria.filter { c in
+            let optIdx = decision.options.firstIndex(of: option) ?? 0
+            let optionId = UUID(uuidString: "\(decision.id.uuidString)-\(optIdx)") ?? UUID()
+            return c.score(for: optionId) > 0 && c.score(for: optionId) < 4
+        }.map { $0.name }
+
+        var desc = "Score: \(String(format: "%.1f", score))/10"
+        if !strengths.isEmpty {
+            desc += " — Strong in: \(strengths.joined(separator: ", "))"
+        }
+        if !weaknesses.isEmpty {
+            desc += " — Weak in: \(weaknesses.joined(separator: ", "))"
+        }
+        return desc
+    }
+
+    struct AIAnalysis {
+        let scenarios: [Scenario]
+        let blindSpots: [String]
+        let missingInfo: [String]
+        let recommendation: String
+        let confidenceScore: Double
+    }
+
+    struct Scenario {
+        let title: String
+        let probability: Double
+        let outcome: String
+    }
+
     // MARK: - Reminders
     
     func scheduleReminder(for decision: Decision) {

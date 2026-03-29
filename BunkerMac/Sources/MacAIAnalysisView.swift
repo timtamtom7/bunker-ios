@@ -241,6 +241,30 @@ struct MacAIAnalysisView: View {
     private func generateChallengeQuestions() -> [String] {
         var questions: [String] = []
 
+        // What if this criterion is wrong?
+        for criterion in decision.criteria.prefix(2) {
+            if criterion.importance >= 7 {
+                questions.append("What if '\(criterion.name)' matters less than you think? Would your recommendation change?")
+            }
+        }
+
+        // What if assumptions are wrong?
+        if let topOption = decision.options.first {
+            questions.append("What if '\(topOption)' isn't as good as it seems? What's the downside?")
+        }
+
+        // What's the strongest argument against the top option?
+        if decision.options.count >= 2 {
+            let secondOption = decision.options[1]
+            questions.append("What's the strongest argument for '\(secondOption)' over your current top choice?")
+        }
+
+        // What information would change your mind?
+        if decision.stake == .critical {
+            questions.append("What single piece of information would make you reverse your current recommendation?")
+        }
+
+        // Standard challenges
         if decision.options.count < 2 {
             questions.append("You're comparing fewer than 2 options. Are you sure you've explored all alternatives?")
         }
@@ -266,7 +290,7 @@ struct MacAIAnalysisView: View {
         questions.append("What's the opportunity cost of not choosing your second-ranked option?")
         questions.append("Would you recommend this same choice to someone you deeply care about?")
 
-        return Array(questions.prefix(5))
+        return Array(questions.prefix(6))
     }
 
     private func generateBlindSpots() -> [String] {
@@ -296,6 +320,12 @@ struct MacAIAnalysisView: View {
             args.append("Are you sure '\(topOption)' is the best choice? What if your assumptions about it are wrong?")
         }
 
+        // Strongest argument against the top option
+        if decision.options.count >= 2 {
+            let second = decision.options[1]
+            args.append("The strongest argument for '\(second)' over your top choice: you might be underestimating its hidden advantages.")
+        }
+
         if decision.stake == .high || decision.stake == .critical {
             args.append("High-stakes decisions often suffer from analysis paralysis. You might be overthinking this.")
         }
@@ -306,6 +336,6 @@ struct MacAIAnalysisView: View {
             args.append("Your options seem brief. Are you being specific enough to make a meaningful comparison?")
         }
 
-        return Array(args.prefix(4))
+        return Array(args.prefix(5))
     }
 }

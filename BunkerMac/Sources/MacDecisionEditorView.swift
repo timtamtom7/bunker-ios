@@ -82,6 +82,9 @@ struct MacDecisionEditorView: View {
         .sheet(isPresented: $showAIAnalysis) {
             MacAIAnalysisView(decision: decision)
         }
+        .sheet(isPresented: $showOutcomeSimulator) {
+            MacOutcomeSimulatorView(decision: decision)
+        }
     }
 
     @State private var showOutcomeSimulator = false
@@ -307,6 +310,18 @@ struct MacDecisionEditorView: View {
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundColor(BunkerColors.accent)
                 Spacer()
+                Button {
+                    showOutcomeSimulator = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "wand.and.stars")
+                        Text("What if...")
+                    }
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(BunkerColors.warning)
+                }
+                .buttonStyle(.plain)
+
                 Button {
                     showAIAnalysis = true
                 } label: {
