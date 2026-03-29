@@ -28,6 +28,8 @@ struct BunkerMenuBar: View {
                         .foregroundColor(BunkerColors.textTertiary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Close")
+                .accessibilityHint("Closes the menu bar window")
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
@@ -56,6 +58,8 @@ struct BunkerMenuBar: View {
                     .padding(.vertical, 8)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("New Decision")
+                .accessibilityHint("Creates a new decision")
 
                 Button {
                     showMainWindow = true
@@ -72,6 +76,8 @@ struct BunkerMenuBar: View {
                     .padding(.vertical, 8)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Open Bunker")
+                .accessibilityHint("Opens the Bunker main window")
             }
 
             if !decisions.isEmpty {
@@ -104,6 +110,8 @@ struct BunkerMenuBar: View {
                             .padding(.vertical, 4)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel(decision.title.isEmpty ? "Untitled Decision" : decision.title)
+                        .accessibilityHint("Opens this decision")
                     }
                 }
             }
@@ -127,6 +135,8 @@ struct BunkerMenuBar: View {
                 .padding(.vertical, 8)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Quit Bunker")
+            .accessibilityHint("Quits the Bunker application")
         }
         .frame(width: 260)
         .background(BunkerColors.background)

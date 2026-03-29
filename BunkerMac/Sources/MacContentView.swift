@@ -98,6 +98,8 @@ struct MacContentView: View {
                         .foregroundColor(BunkerColors.textSecondary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
+                .accessibilityHint("Opens app settings")
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
@@ -179,6 +181,8 @@ struct MacContentView: View {
             }
             .buttonStyle(.plain)
             .padding(12)
+            .accessibilityLabel("New Decision")
+            .accessibilityHint("Creates a new decision")
         }
         .frame(minWidth: 260, idealWidth: 280, maxWidth: 320)
         .background(BunkerColors.surface)

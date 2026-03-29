@@ -28,6 +28,8 @@ struct MacSettingsView: View {
                         .foregroundColor(BunkerColors.textTertiary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Close")
+                .accessibilityHint("Closes the settings view")
             }
             .padding(20)
             .background(BunkerColors.surface)
@@ -142,6 +144,8 @@ struct MacSettingsView: View {
             .cornerRadius(8)
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(title)
+        .accessibilityHint(subtitle)
     }
 
     // MARK: - Stats Card
