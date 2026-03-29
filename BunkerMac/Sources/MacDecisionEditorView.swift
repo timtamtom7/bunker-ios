@@ -118,6 +118,8 @@ struct MacDecisionEditorView: View {
                     .cornerRadius(6)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Save decision")
+                .accessibilityHint("Saves the current decision")
 
                 Button {
                     showSettings = true
@@ -126,6 +128,8 @@ struct MacDecisionEditorView: View {
                         .foregroundColor(BunkerColors.textSecondary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
+                .accessibilityHint("Opens the settings window")
             }
         }
         .padding(.horizontal, 24)
@@ -201,7 +205,7 @@ struct MacDecisionEditorView: View {
         switch decision.stake {
         case .low: return BunkerColors.success
         case .medium: return BunkerColors.warning
-        case .high: return Color.orange
+        case .high: return BunkerColors.warning // Amber for high-stake decisions
         case .critical: return BunkerColors.error
         }
     }
@@ -321,6 +325,8 @@ struct MacDecisionEditorView: View {
                     .foregroundColor(BunkerColors.warning)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("What if simulator")
+                .accessibilityHint("Opens the scenario simulator to explore alternative outcomes")
 
                 Button {
                     showAIAnalysis = true
@@ -333,6 +339,8 @@ struct MacDecisionEditorView: View {
                     .foregroundColor(BunkerColors.accent)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Deep AI analysis")
+                .accessibilityHint("Opens AI-powered analysis with challenge questions and blind spots")
             }
 
             VStack(alignment: .leading, spacing: 8) {

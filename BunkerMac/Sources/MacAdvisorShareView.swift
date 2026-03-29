@@ -74,6 +74,8 @@ struct MacAdvisorShareView: View {
                 .cornerRadius(8)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Add advisor")
+            .accessibilityHint("Opens a form to add a new trusted advisor")
 
             Button {
                 dismiss()
@@ -85,6 +87,8 @@ struct MacAdvisorShareView: View {
                     .cornerRadius(6)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Close")
+            .accessibilityHint("Closes the share with advisors view")
         }
         .padding(16)
         .background(BunkerColors.surface)
@@ -227,6 +231,8 @@ struct MacAdvisorShareView: View {
                     .cornerRadius(6)
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Share decision with \(advisor.displayName)")
+            .accessibilityHint("Sends this decision to the advisor for their feedback")
         }
         .padding(12)
         .background(BunkerColors.surface)
@@ -427,6 +433,8 @@ struct MacAdvisorShareView: View {
                         .cornerRadius(8)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Cancel")
+                .accessibilityHint("Closes the add advisor form without saving")
 
                 Button {
                     addAdvisor()
@@ -441,6 +449,8 @@ struct MacAdvisorShareView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(newAdvisorName.isEmpty)
+                .accessibilityLabel("Add advisor")
+                .accessibilityHint("Adds the advisor with the entered details")
             }
         }
         .padding(24)

@@ -114,6 +114,8 @@ struct MacContentView: View {
                     .textFieldStyle(.plain)
                     .font(.system(size: 13))
                     .foregroundColor(BunkerColors.textPrimary)
+                    .accessibilityLabel("Search decisions")
+                    .accessibilityHint("Filter the decision list by title or description")
             }
             .padding(8)
             .background(BunkerColors.surfaceSecondary)

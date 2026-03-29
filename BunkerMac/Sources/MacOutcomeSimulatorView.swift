@@ -385,7 +385,7 @@ struct MacOutcomeSimulatorView: View {
             riskIcon = "exclamationmark.shield.fill"
         } else if analysis.confidenceScore >= 40 {
             riskLevel = "ELEVATED RISK"
-            riskColor = Color.orange
+            riskColor = BunkerColors.warning
             riskIcon = "exclamationmark.triangle.fill"
         } else {
             riskLevel = "HIGH RISK"

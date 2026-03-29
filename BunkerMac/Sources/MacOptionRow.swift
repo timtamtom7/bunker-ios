@@ -56,6 +56,8 @@ struct MacOptionRow: View {
                         .foregroundColor(BunkerColors.textTertiary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(showScores ? "Collapse criteria scores" : "Expand criteria scores")
+                .accessibilityHint("Shows or hides per-criterion scoring for this option")
 
                 Button {
                     onDelete()
@@ -65,6 +67,8 @@ struct MacOptionRow: View {
                         .foregroundColor(BunkerColors.error.opacity(0.7))
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Delete option")
+                .accessibilityHint("Removes this option from the decision")
             }
             .padding(12)
             .background(showScores ? BunkerColors.surfaceSecondary : BunkerColors.surface)

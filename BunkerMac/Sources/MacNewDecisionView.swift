@@ -49,6 +49,8 @@ struct MacNewDecisionView: View {
                             .padding(12)
                             .background(BunkerColors.surfaceSecondary)
                             .cornerRadius(8)
+                            .accessibilityLabel("Decision title")
+                            .accessibilityHint("Enter the title of your decision")
                     }
 
                     // Description
@@ -62,6 +64,8 @@ struct MacNewDecisionView: View {
                             .padding(12)
                             .background(BunkerColors.surfaceSecondary)
                             .cornerRadius(8)
+                            .accessibilityLabel("Decision description")
+                            .accessibilityHint("Describe the context and background for this decision")
                     }
 
                     // Stake Level
@@ -69,13 +73,14 @@ struct MacNewDecisionView: View {
                         Text("STAKE LEVEL")
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(BunkerColors.textTertiary)
-                        Picker("", selection: $stake) {
+                        Picker("Stake Level", selection: $stake) {
                             ForEach(StakeLevel.allCases, id: \.self) { level in
                                 Text(level.rawValue).tag(level)
                             }
                         }
                         .pickerStyle(.segmented)
-                        .labelsHidden()
+                        .accessibilityLabel("Stake level")
+                        .accessibilityHint("How important is this decision?")
                     }
 
                     // Reversibility
@@ -83,13 +88,14 @@ struct MacNewDecisionView: View {
                         Text("REVERSIBILITY")
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(BunkerColors.textTertiary)
-                        Picker("", selection: $reversibility) {
+                        Picker("Reversibility", selection: $reversibility) {
                             ForEach(Reversibility.allCases, id: \.self) { level in
                                 Text(level.rawValue).tag(level)
                             }
                         }
                         .pickerStyle(.segmented)
-                        .labelsHidden()
+                        .accessibilityLabel("Reversibility")
+                        .accessibilityHint("How easily can this decision be reversed if needed?")
                     }
 
                     // Time Horizon
@@ -97,13 +103,14 @@ struct MacNewDecisionView: View {
                         Text("TIME HORIZON")
                             .font(.system(size: 11, weight: .medium))
                             .foregroundColor(BunkerColors.textTertiary)
-                        Picker("", selection: $timeHorizon) {
+                        Picker("Time Horizon", selection: $timeHorizon) {
                             ForEach(TimeHorizon.allCases, id: \.self) { level in
                                 Text(level.rawValue).tag(level)
                             }
                         }
                         .pickerStyle(.segmented)
-                        .labelsHidden()
+                        .accessibilityLabel("Time horizon")
+                        .accessibilityHint("Over what time period will the effects of this decision be felt?")
                     }
                 }
                 .padding(20)
@@ -115,10 +122,20 @@ struct MacNewDecisionView: View {
 
             // Actions
             HStack {
-                Button("Cancel") {
+                Button {
                     dismiss()
+                } label: {
+                    Text("Cancel")
+                        .font(.system(size: 14, weight: .medium))
+                        .foregroundColor(BunkerColors.textSecondary)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(BunkerColors.surfaceSecondary)
+                        .cornerRadius(8)
                 }
-                .foregroundColor(BunkerColors.textSecondary)
+                .buttonStyle(.plain)
+                .accessibilityLabel("Cancel")
+                .accessibilityHint("Closes this sheet without creating a decision")
 
                 Spacer()
 
@@ -136,6 +153,8 @@ struct MacNewDecisionView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(title.isEmpty)
+                .accessibilityLabel("Create decision")
+                .accessibilityHint("Creates a new decision with the entered details")
             }
             .padding(20)
             .background(BunkerColors.surface)
