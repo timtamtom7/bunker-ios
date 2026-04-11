@@ -292,6 +292,7 @@ import SwiftUI
             .labelsHidden()
             .font(.bunkerCaption)
             .tint(Color.bunkerAccent)
+            .accessibilityLabel("Deadline date")
 
             if viewModel.decision.deadlineDate != nil {
                 Button {
@@ -302,6 +303,7 @@ import SwiftUI
                         .font(.bunkerCaption)
                         .foregroundStyle(Color.bunkerTextTertiary)
                 }
+                .accessibilityLabel("Clear deadline")
             }
         }
         .padding(Spacing.xs)
@@ -326,6 +328,7 @@ import SwiftUI
             .labelsHidden()
             .font(.bunkerCaption)
             .tint(Color.bunkerWarning)
+            .accessibilityLabel("Reminder date and time")
 
             if viewModel.decision.reminderDate != nil {
                 Button {
@@ -336,6 +339,7 @@ import SwiftUI
                         .font(.bunkerCaption)
                         .foregroundStyle(Color.bunkerTextTertiary)
                 }
+                .accessibilityLabel("Clear reminder")
             }
         }
         .padding(Spacing.xs)
@@ -360,6 +364,7 @@ import SwiftUI
                 }
                 .pickerStyle(.menu)
                 .tint(Color(hex: viewModel.decision.stake.color))
+                .accessibilityValue(viewModel.decision.stake.rawValue)
             }
 
             Divider()
@@ -381,6 +386,7 @@ import SwiftUI
                 }
                 .pickerStyle(.menu)
                 .tint(Color.bunkerTextSecondary)
+                .accessibilityValue(viewModel.decision.reversibility.rawValue)
             }
 
             Divider()
@@ -402,6 +408,7 @@ import SwiftUI
                 }
                 .pickerStyle(.menu)
                 .tint(Color.bunkerTextSecondary)
+                .accessibilityValue(viewModel.decision.timeHorizon.rawValue)
             }
         }
         .padding(Spacing.sm)

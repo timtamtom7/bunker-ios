@@ -100,6 +100,7 @@ import SwiftUI
                                 }
                             }
                             .pickerStyle(.segmented)
+                            .accessibilityValue(stake.rawValue)
                         }
                         .padding(Spacing.sm)
                         .background(Color.bunkerSurface)
@@ -122,6 +123,7 @@ import SwiftUI
                                 }
                             }
                             .pickerStyle(.segmented)
+                            .accessibilityValue(reversibility.rawValue)
                         }
                         .padding(Spacing.sm)
                         .background(Color.bunkerSurface)
@@ -144,6 +146,7 @@ import SwiftUI
                                 }
                             }
                             .pickerStyle(.segmented)
+                            .accessibilityValue(timeHorizon.rawValue)
                         }
                         .padding(Spacing.sm)
                         .background(Color.bunkerSurface)
