@@ -8,11 +8,11 @@ extension Animation {
     static let bunkerEaseIn = Animation.easeIn(duration: 0.2)
     
     static func bunkerSpring(reducedMotion: Bool) -> Animation {
-        reducedMotion ? .none : .spring(response: 0.4, dampingFraction: 0.75)
+        reducedMotion ? .linear(duration: 0) : .spring(response: 0.4, dampingFraction: 0.75)
     }
     
     static func bunkerEaseOut(reducedMotion: Bool) -> Animation {
-        reducedMotion ? .none : .easeOut(duration: 0.3)
+        reducedMotion ? .linear(duration: 0) : .easeOut(duration: 0.3)
     }
 }
 

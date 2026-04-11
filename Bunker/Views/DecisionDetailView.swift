@@ -1,11 +1,11 @@
 import SwiftUI
 
 @MainActor struct DecisionDetailView: View {
-    @StateObject private var viewModel: DecisionDetailViewModel
+    @State private var viewModel: DecisionDetailViewModel
     @Environment(\.dismiss) private var dismiss
 
     init(decision: Decision) {
-        _viewModel = StateObject(wrappedValue: DecisionDetailViewModel(decision: decision))
+        _viewModel = State(initialValue: DecisionDetailViewModel(decision: decision))
     }
 
     var body: some View {

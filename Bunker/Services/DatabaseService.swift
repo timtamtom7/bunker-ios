@@ -4,7 +4,7 @@ import os.log
 
 private let logger = Logger(subsystem: "com.bunker.database", category: "DatabaseService")
 
-final class DatabaseService {
+final class DatabaseService: @unchecked Sendable {
     static let shared = DatabaseService()
 
     private var db: Connection?

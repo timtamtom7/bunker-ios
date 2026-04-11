@@ -2,8 +2,7 @@ import Foundation
 import UserNotifications
 
 /// R6: Enhanced notification service with custom sounds and smart reminders
-@MainActor
-final class NotificationService {
+final class NotificationService: @unchecked Sendable {
     static let shared = NotificationService()
 
     private init() {}
