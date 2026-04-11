@@ -3,22 +3,20 @@ import UserNotifications
 
 @main
 struct BunkerApp: App {
-    init() {
-        requestNotificationPermission()
-    }
+    @AppStorage("colorScheme") private var colorScheme: String = "dark"
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(colorSchemeValue)
         }
     }
 
-    private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            if let error = error {
-                print("Notification permission error: \(error)")
-            }
+    private var colorSchemeValue: ColorScheme? {
+        switch colorScheme {
+        case "dark": return .dark
+        case "light": return .light
+        default: return nil
         }
     }
 }
@@ -38,7 +36,7 @@ extension Color {
     // Text
     static let bunkerTextPrimary = Color(hex: "F0F4F8")
     static let bunkerTextSecondary = Color(hex: "A0AEC0")
-    static let bunkerTextTertiary = Color(hex: "718096")
+    static let bunkerTextTertiary = Color(hex: "8A9AAF")
 
     // Semantic
     static let bunkerError = Color(hex: "FC8181")

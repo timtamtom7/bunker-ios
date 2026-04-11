@@ -1,7 +1,7 @@
 import SwiftUI
 
 @MainActor struct DecisionListView: View {
-    @State private var viewModel = DecisionListViewModel()
+    @StateObject private var viewModel = DecisionListViewModel()
     @State private var searchText = ""
 
     var filteredDecisions: [Decision] {

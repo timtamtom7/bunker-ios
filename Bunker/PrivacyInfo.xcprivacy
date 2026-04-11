@@ -19,5 +19,7 @@
             </array>
         </dict>
     </array>
+    <key>NSPrivacyCalendarUsageDescription</key>
+    <string>Bunker adds decision deadlines to your calendar so you don't miss important choice points.</string>
 </dict>
 </plist>

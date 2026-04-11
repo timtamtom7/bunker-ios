@@ -4,11 +4,10 @@ import os.log
 
 private let logger = Logger(subsystem: "com.bunker.database", category: "DatabaseService")
 
-final class DatabaseService: @unchecked Sendable {
+final class DatabaseService {
     static let shared = DatabaseService()
 
     private var db: Connection?
-    private let dbQueue = DispatchQueue(label: "com.bunker.database")
 
     // Tables
     private let decisions = Table("decisions")

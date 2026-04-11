@@ -2,7 +2,7 @@ import Foundation
 import NaturalLanguage
 import UserNotifications
 
-final class AIDecisionService: @unchecked Sendable {
+final class AIDecisionService {
     static let shared = AIDecisionService()
     
     private init() {}

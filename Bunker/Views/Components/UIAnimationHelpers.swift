@@ -6,6 +6,14 @@ extension Animation {
     static let bunkerSpring = Animation.spring(response: 0.4, dampingFraction: 0.75)
     static let bunkerEaseOut = Animation.easeOut(duration: 0.3)
     static let bunkerEaseIn = Animation.easeIn(duration: 0.2)
+    
+    static func bunkerSpring(reducedMotion: Bool) -> Animation {
+        reducedMotion ? .none : .spring(response: 0.4, dampingFraction: 0.75)
+    }
+    
+    static func bunkerEaseOut(reducedMotion: Bool) -> Animation {
+        reducedMotion ? .none : .easeOut(duration: 0.3)
+    }
 }
 
 // MARK: - Shake Animation
@@ -25,11 +33,13 @@ struct ShakeEffect: GeometryEffect {
 struct ShakeModifier: ViewModifier {
     let shakes: Int
     @State private var shakeAmount: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         content
             .modifier(ShakeEffect(shakesPerUnit: 3, animatableData: shakeAmount))
             .onChange(of: shakes) { _, newValue in
+                if reduceMotion { return }
                 withAnimation(.linear(duration: 0.4)) {
                     shakeAmount = CGFloat(newValue)
                 }
@@ -48,12 +58,14 @@ extension View {
 struct PulseModifier: ViewModifier {
     let isActive: Bool
     @State private var isPulsing = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         content
             .scaleEffect(isPulsing && isActive ? 1.05 : 1.0)
             .opacity(isPulsing && isActive ? 0.8 : 1.0)
             .onChange(of: isActive) { _, newValue in
+                if reduceMotion { return }
                 if newValue {
                     withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
                         isPulsing = true
@@ -77,11 +89,12 @@ extension View {
 
 struct CardPressModifier: ViewModifier {
     @State private var isPressed = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         content
             .scaleEffect(isPressed ? 0.97 : 1.0)
-            .animation(.bunkerSpring, value: isPressed)
+            .animation(reduceMotion ? .none : .bunkerSpring, value: isPressed)
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in isPressed = true }
@@ -102,13 +115,14 @@ struct SlideInModifier: ViewModifier {
     let edge: Edge
     let isShown: Bool
     @State private var offset: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         content
             .offset(x: edge == .leading ? offset : 0,
                     y: edge == .top ? offset : edge == .bottom ? -offset : 0)
             .onChange(of: isShown) { _, newValue in
-                withAnimation(.bunkerSpring) {
+                withAnimation(reduceMotion ? .none : .bunkerSpring) {
                     offset = newValue ? 0 : (edge == .leading ? -50 : 50)
                 }
             }

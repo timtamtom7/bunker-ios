@@ -133,6 +133,7 @@ enum HapticFeedback {
 // MARK: - Button Styles (iOS 26 Liquid Glass)
 struct LiquidGlassButtonStyle: ButtonStyle {
     let isPrimary: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -156,11 +157,13 @@ struct LiquidGlassButtonStyle: ButtonStyle {
                 y: configuration.isPressed ? 1 : 3
             )
             .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+            .animation(reduceMotion ? .none : .easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
 struct LiquidGlassIconButtonStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(Theme.Spacing.xs)
@@ -169,11 +172,13 @@ struct LiquidGlassIconButtonStyle: ButtonStyle {
             )
             .clipShape(RoundedRectangle(cornerRadius: Theme.CornerRadius.sm))
             .scaleEffect(configuration.isPressed ? 0.93 : 1.0)
-            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+            .animation(reduceMotion ? .none : .easeInOut(duration: 0.1), value: configuration.isPressed)
     }
 }
 
 struct LiquidGlassCardButtonStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background(
@@ -191,7 +196,7 @@ struct LiquidGlassCardButtonStyle: ButtonStyle {
                 y: configuration.isPressed ? 2 : 4
             )
             .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+            .animation(reduceMotion ? .none : .easeInOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 
