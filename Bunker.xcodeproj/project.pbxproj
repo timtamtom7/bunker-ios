@@ -94,7 +94,10 @@
 		B1E47C95491D1C31B0F5E69F /* BunkerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BunkerApp.swift; sourceTree = "<group>"; };
 		B302BA2A4210F94A55C1F90A /* ShareDecisionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDecisionView.swift; sourceTree = "<group>"; };
 		B66F9BECD863C2D897142541 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+<<<<<<< ours
 		B81A51D8CE01883E756E0C90 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> theirs
 		B8FAB88F190BDF2A0EAD5B84 /* AnalyticsDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsDashboardView.swift; sourceTree = "<group>"; };
 		C4117DF6BCB567C8F3277D87 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C8F30D5BA18B30C7159B70D1 /* FreemiumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreemiumService.swift; sourceTree = "<group>"; };
